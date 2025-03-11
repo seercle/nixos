@@ -13,7 +13,7 @@
   let
     profile = "homelab"; #profile to select, must be contained in the profiles directory
     hostname = "homelab";
-    system = "x86_linux";
+    system = "x86_64-linux";
     users = ["axel" "william"]; #users to select, must be contained in the users directory of the profile directory
   in {
     homeConfigurations = builtins.listToAttrs (builtins.map(user: {

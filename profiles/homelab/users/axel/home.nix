@@ -2,8 +2,8 @@
 {
   imports = [
     ../../../../user/app/git.nix
-    ../../../../user/app/zoxide.nix
-    ../../../../user/shell/sh.nix
+    ../../../../user/shell/zsh.nix
+    ../../../../user/shell/aliases.nix
   ];
   git.userName = "Hy3z";
   git.userEmail = "axel.vivenot@outlook.fr";

@@ -11,56 +11,34 @@
   outputs = inputs@{self, nixpkgs, home-manager,...}:
   
   let
-    systemSettings = {
-      profile = "homelab";
-      hostname = "homelab";
-      system = "x86_64-linux";
-      timezone = "Europe/Paris";
-      wolInterface = "enp4s0";
-    };
-    vpnSettings = {
-        ips = ["10.0.0.1/24"];
-        externalInterface = "enp4s0";
-        port = 51820;
-        privateKeyFile = "/root/vpn/wg-private";
-        peers = [
-          {
-            publicKey = "xQaF3IfJQvmHEzytEVAG2xBSdn56NsqRXt2eIUGYJRY=";
-            allowedIPs = ["10.0.0.2/32"];
-          }
-        ];
-    };
-    #the usernames must match the directories in profiles/your_profile/users/
-    usernames = [
-      "axel" 
-      "william"
-    ];
+    profile = "homelab"; #profile to select, must be contained in the profiles directory
+    hostname = "homelab";
+    system = "x86_linux";
+    users = ["axel" "william"]; #users to select, must be contained in the users directory of the profile directory
   in {
-    homeConfigurations = builtins.listToAttrs (builtins.map(username: {
-      name = username; 
+    homeConfigurations = builtins.listToAttrs (builtins.map(user: {
+      name = user; 
       value = home-manager.lib.homeManagerConfiguration {          
-        pkgs = nixpkgs.legacyPackages.${systemSettings.system};
+        pkgs = nixpkgs.legacyPackages.${system};
         modules = [
           ./home.nix
-          ./profiles/${systemSettings.profile}/home.nix
-          ./profiles/${systemSettings.profile}/users/${username}/home.nix
+          ./profiles/${profile}/home.nix
+          ./profiles/${profile}/users/${user}/home.nix
         ];
         extraSpecialArgs = {
-          inherit username;
+          inherit user;
         };
       };
-    }) usernames);
+    }) users);
 
-    nixosConfigurations.${systemSettings.hostname} = nixpkgs.lib.nixosSystem {
-      system = systemSettings.system;
+    nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+      system = system;
       modules = [
         ./configuration.nix
-        ./profiles/${systemSettings.profile}/configuration.nix
-      ] ++ builtins.map (username: ./profiles/${systemSettings.profile}/users/${username}/configuration.nix) usernames;
+        ./profiles/${profile}/configuration.nix
+      ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
       specialArgs = {
-        inherit systemSettings;
-        inherit vpnSettings;
-        inherit usernames;
+        inherit users;
       };
     };
   };

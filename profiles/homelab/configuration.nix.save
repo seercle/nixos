@@ -1,4 +1,4 @@
-{ config, lib, pkgs, users, ... }:
+{ config, lib, pkgs, usernames, systemSettings, ... }:
 {
   imports = [
     ../../system/security/wireguard.nix
@@ -21,14 +21,14 @@
       }
     ];
   }; 
-  docker.usernames = users; #define docker options
+  docker.usernames = usernames; #define docker options
   wol.interface = "enp4s0"; #define wol interface  
 
   environment.systemPackages = with pkgs; [
     git
   ];
 
-  time.timeZone = "Europe/Paris";
+  networking.
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true; 

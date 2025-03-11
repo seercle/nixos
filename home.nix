@@ -1,7 +1,7 @@
-{ username,...}:
+{ user,...}:
 {
   programs.home-manager.enable = true;
   home.stateVersion = "23.11";  
-  home.username = username;
-  home.homeDirectory = /home/${username};
+  home.username = user;
+  home.homeDirectory = /home/${user};
 }

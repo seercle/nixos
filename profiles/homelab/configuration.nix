@@ -7,6 +7,7 @@
     ../../system/security/fail2ban.nix
     ../../system/app/docker.nix
     ../../system/app/pelican.nix    
+    ../../system/fonts.nix
   ];
   
   wireguard = { #define wireguard options 

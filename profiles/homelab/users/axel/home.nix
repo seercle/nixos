@@ -3,7 +3,6 @@
   imports = [
     ../../../../user/app/git.nix
     ../../../../user/shell/fish.nix
-    #../../../../user/shell/zsh.nix
     ../../../../user/shell/aliases.nix
     ../../../../user/shell/starship/starship.nix
   ];
@@ -13,7 +12,6 @@
     tldr
     bun
     nodejs_22
-    btop
     tree
     wget
     openssl

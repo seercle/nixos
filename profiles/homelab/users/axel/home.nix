@@ -2,8 +2,10 @@
 {
   imports = [
     ../../../../user/app/git.nix
-    ../../../../user/shell/zsh.nix
+    ../../../../user/shell/fish.nix
+    #../../../../user/shell/zsh.nix
     ../../../../user/shell/aliases.nix
+    ../../../../user/shell/starship/starship.nix
   ];
   git.userName = "Hy3z";
   git.userEmail = "axel.vivenot@outlook.fr";
@@ -15,5 +17,6 @@
     tree
     wget
     openssl
+    nix-prefetch-git
   ];
 }

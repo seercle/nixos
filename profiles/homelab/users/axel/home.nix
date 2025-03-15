@@ -6,6 +6,9 @@
     ../../../../user/shell/aliases.nix
     ../../../../user/shell/starship/starship.nix
   ];
+  programs.thefuck = {
+    enable = true;
+  };
   git.userName = "Hy3z";
   git.userEmail = "axel.vivenot@outlook.fr";
   home.packages = with pkgs; [

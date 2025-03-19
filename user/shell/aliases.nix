@@ -1,4 +1,5 @@
 { pkgs, ... }:
+# do not forget to enable the used shells in your home-manager config
 {  
   home.shellAliases = {
     hms = "home-manager switch --flake /etc/nixos";

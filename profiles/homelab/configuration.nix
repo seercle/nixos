@@ -27,6 +27,8 @@
 
   environment.systemPackages = with pkgs; [
     git
+    filebrowser
+    tree
   ];
 
   time.timeZone = "Europe/Paris";
@@ -100,6 +102,14 @@
         };});
         "ui.minio.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:11901";
+          proxyWebsockets = true;
+        };});
+	"file.vivenot.dev" = (SSL // {locations."/" = {
+          proxyPass = "http://localhost:9030";
+          proxyWebsockets = true;
+        };});
+        "dev.vivenot.dev" = (SSL // {locations."/" = {
+          proxyPass = "http://localhost:3000";
           proxyWebsockets = true;
         };});
     };

@@ -19,5 +19,11 @@
     wget
     openssl
     nix-prefetch-git
+    tmux
   ];
+  programs.tmux = {
+    enable = true;
+    shell = "${pkgs.fish}/bin/fish";
+  };
 }
+

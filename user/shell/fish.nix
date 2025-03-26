@@ -10,6 +10,7 @@ in
 {
   home.packages = with pkgs; [
     grc
+    fzf
   ];
   programs.fish = {
     enable = true;
@@ -22,8 +23,8 @@ in
       { name = "fzf"; src = pkgs.fishPlugins.fzf-fish.src; }
     ];
   };
-  xdg.configFile."fish/themes/Catppuccin Latte.theme".source = "${catppuccin-fish}/themes/Catppuccin Latte.theme";
+  #xdg.configFile."fish/themes/Catppuccin Latte.theme".source = "${catppuccin-fish}/themes/Catppuccin Latte.theme";
   xdg.configFile."fish/themes/Catppuccin Mocha.theme".source = "${catppuccin-fish}/themes/Catppuccin Mocha.theme";
-  xdg.configFile."fish/themes/Catppuccin Frappe.theme".source = "${catppuccin-fish}/themes/Catppuccin Frappe.theme";
+  #xdg.configFile."fish/themes/Catppuccin Frappe.theme".source = "${catppuccin-fish}/themes/Catppuccin Frappe.theme";
 }
 

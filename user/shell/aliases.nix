@@ -11,6 +11,7 @@
     neofetch = "fastfetch";
     gitfetch = "onefetch";
     cat = "bat";
+    s = "sudo";
   };
   programs.zoxide = {
     enable = true;

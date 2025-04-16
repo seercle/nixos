@@ -92,10 +92,6 @@
           proxyPass = "http://localhost:10000";
           proxyWebsockets = true;
         };});
-	"bulle.vivenot.dev" = (SSL // {locations."/" = {
-	  proxyPass = "http://localhost:8000";
-	  proxyWebsockets = true;
-	};});
         "minio.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:11900";
           proxyWebsockets = true;
@@ -104,12 +100,21 @@
           proxyPass = "http://localhost:11901";
           proxyWebsockets = true;
         };});
-	"file.vivenot.dev" = (SSL // {locations."/" = {
-          proxyPass = "http://localhost:9030";
+        "3a.vivenot.dev" = (SSL // {locations."/" = {
+          proxyPass = "http://localhost:12080";
           proxyWebsockets = true;
         };});
+
         "dev.vivenot.dev" = (SSL // {locations."/" = {
-          proxyPass = "http://localhost:3000";
+          proxyPass = "http://localhost:13080";
+          proxyWebsockets = true;
+        };});
+	"bulle.vivenot.dev" = (SSL // {locations."/" = {
+	  proxyPass = "http://localhost:14080";
+	  proxyWebsockets = true;
+	};});
+	"file.vivenot.dev" = (SSL // {locations."/" = {
+          proxyPass = "http://localhost:15080";
           proxyWebsockets = true;
         };});
     };

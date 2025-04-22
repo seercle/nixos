@@ -14,5 +14,6 @@
     file
     nodejs_22
     unzip
+    tldr
   ];
 }

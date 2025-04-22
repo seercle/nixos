@@ -105,16 +105,12 @@
           proxyWebsockets = true;
         };});
 
-        "dev.vivenot.dev" = (SSL // {locations."/" = {
-          proxyPass = "http://localhost:13080";
+        "dev.vivenot.dev" = (SSL // {locations."/" = { # Ports 13000-14000 : propriété de william
+          proxyPass = "http://localhost:13000";
           proxyWebsockets = true;
         };});
-	"bulle.vivenot.dev" = (SSL // {locations."/" = {
-	  proxyPass = "http://localhost:14080";
-	  proxyWebsockets = true;
-	};});
 	"file.vivenot.dev" = (SSL // {locations."/" = {
-          proxyPass = "http://localhost:15080";
+          proxyPass = "http://localhost:13002";
           proxyWebsockets = true;
         };});
     };

@@ -110,7 +110,7 @@
           proxyWebsockets = true;
         };});
 	"file.vivenot.dev" = (SSL // {locations."/" = {
-          proxyPass = "http://localhost:13002";
+          proxyPass = "http://localhost:13001";
           proxyWebsockets = true;
         };});
     };

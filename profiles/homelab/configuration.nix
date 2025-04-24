@@ -31,6 +31,11 @@
     tree
   ];
 
+  programs.nix-ld = { # Allows NixOS to run unpatched dynamically linked binaries
+    enable = true;
+    package = pkgs.nix-ld-rs;
+  };
+
   time.timeZone = "Europe/Paris";
 
   boot.loader.systemd-boot.enable = true;
@@ -113,6 +118,10 @@
           proxyPass = "http://localhost:13001";
           proxyWebsockets = true;
         };});
+	"filedev.vivenot.dev" = (SSL // {locations."/" = {
+          proxyPass = "http://localhost:13002";
+          proxyWebsockets = true;
+        };}); 
     };
   };
 }

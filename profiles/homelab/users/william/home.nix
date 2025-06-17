@@ -15,5 +15,7 @@
     nodejs_22
     unzip
     tldr
+    inkscape
+    python313
   ];
 }

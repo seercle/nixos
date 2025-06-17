@@ -9,7 +9,7 @@
   programs.thefuck = {
     enable = true;
   };
-  git.userName = "Hy3z";
+  git.userName = "seercle";
   git.userEmail = "axel.vivenot@outlook.fr";
   home.packages = with pkgs; [
     tldr
@@ -20,6 +20,8 @@
     openssl
     nix-prefetch-git
     tmux
+    python313
+    minio-client
   ];
   programs.tmux = {
     enable = true;

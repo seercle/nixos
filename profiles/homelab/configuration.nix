@@ -6,8 +6,11 @@
     ../../system/security/wol.nix
     ../../system/security/fail2ban.nix
     ../../system/app/docker.nix
-    ../../system/app/pelican.nix    
+    #../../system/app/pelican.nix    
     ../../system/fonts.nix
+    ../../system/app/pedantix-solver.nix
+    ../../system/backup/minio.nix
+    ../../system/app/kafka.nix
   ];
   
   wireguard = { #define wireguard options 
@@ -23,8 +26,26 @@
     ];
   }; 
   docker.usernames = users; #define docker options
-  wol.interface = "enp4s0"; #define wol interface  
-
+  wol.interface = "enp4s0"; #define wol interface 
+  pedantix-solver = {
+    path = "/home/axel/ssd/pedantix-solver";
+    shellPath = "./shell.nix";
+    filePath = "./solver.py";
+    logPath = "./job.log";
+  };
+  minio = {
+    configFile = "/root/minio/config.json";
+    calendar = "weekly";
+    bucket = "xxgoldenbluexx/hyez";
+    files = "/etc/nixos /mnt/sdb1/vaultwarden/vw-data /mnt/sda1/nextcloud/data /mnt/sdb1/gitlab/data/backups";
+    prefix = "backup";
+    retention = 5;
+  };
+  kafka = {
+    publicIp = "vivenot.dev";
+    textPort = 9092;
+    controllerPort = 9093;
+  };
   environment.systemPackages = with pkgs; [
     git
     filebrowser
@@ -42,7 +63,8 @@
   boot.loader.efi.canTouchEfiVariables = true; 
   
   networking.firewall.enable = true; #enable firewall 
-  networking.firewall.allowedTCPPorts = [80 443]; #open ports for applications and acme (80, 443)
+  networking.firewall.allowedTCPPorts = [80 443 9092 8000]; #open ports for applications and acme (80, 443)
+  networking.firewall.allowedUDPPorts = [80 443 9092]; #open ports for applications and acme (80, 443)
 
   security.acme = {
     acceptTerms = true;
@@ -54,6 +76,7 @@
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
+    clientMaxBodySize = "10g";
     virtualHosts = 
       let 
         SSL = {
@@ -122,6 +145,10 @@
           proxyPass = "http://localhost:13002";
           proxyWebsockets = true;
         };}); 
+        "setdle.vivenot.dev" = (SSL // {locations."/" = {
+          proxyPass = "http://localhost:13003";
+          proxyWebsockets = true;
+        };});
     };
   };
 }

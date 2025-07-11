@@ -10,5 +10,4 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINDffWe7kGAcZIQSZ9tcKwNyWEe9lRXYPMBmEvzlH85I william.driot@telecom-paris.fr"
     ];
   };
-  programs.nix-ld.enable = true;
 }

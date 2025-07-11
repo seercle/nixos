@@ -6,9 +6,7 @@
     ../../../../user/shell/aliases.nix
     ../../../../user/shell/starship/starship.nix
   ];
-  programs.thefuck = {
-    enable = true;
-  };
+  programs.thefuck.enable = true;
   git.userName = "seercle";
   git.userEmail = "axel.vivenot@outlook.fr";
   home.packages = with pkgs; [
@@ -28,4 +26,3 @@
     shell = "${pkgs.fish}/bin/fish";
   };
 }
-

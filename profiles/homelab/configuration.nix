@@ -1,22 +1,24 @@
 { config, lib, pkgs, users, ... }:
-let 
-  dnsDomain = "dns.vivenot.dev"; 
+let
+  dnsDomain = "dns.vivenot.dev";
 in  {
   imports = [
     ../../system/security/wireguard.nix
     ../../system/security/ssh.nix
     ../../system/security/wol.nix
     ../../system/security/fail2ban.nix
-    ../../system/app/docker.nix
-    #../../system/app/pelican.nix    
-    ../../system/fonts.nix
-    ../../system/app/pedantix-solver.nix
-    ../../system/backup/minio.nix
-    #../../system/app/kafka.nix
     ../../system/security/blocky.nix
+    ../../system/security/minio.nix
+
+    ../../system/app/docker.nix
+    ../../system/app/pedantix-solver.nix
+    #../../system/app/pelican.nix
+    #../../system/app/kafka.nix
+
+    #../../system/fonts.nix
   ];
-  
-  wireguard = { #define wireguard options 
+
+  wireguard = {
     port = 51820;
     externalInterface = "enp4s0";
     privateKeyFile = "/root/vpn/wg-private";
@@ -27,9 +29,9 @@ in  {
         allowedIPs = ["10.0.0.2/32"];
       }
     ];
-  }; 
-  docker.usernames = users; #define docker options
-  wol.interface = "enp4s0"; #define wol interface 
+  };
+  docker.usernames = users;
+  wol.interface = "enp4s0";
   pedantix-solver = {
     path = "/home/axel/ssd/pedantix-solver";
     shellPath = "./shell.nix";
@@ -44,15 +46,16 @@ in  {
     prefix = "backup";
     retention = 5;
   };
+  blocky = {
+    certFile = "${config.security.acme.certs.${dnsDomain}.directory}/fullchain.pem";
+    keyFile = "${config.security.acme.certs.${dnsDomain}.directory}/key.pem";
+  };
   /*kafka = {
     publicIp = "vivenot.dev";
     textPort = 9092;
     controllerPort = 9093;
   };*/
-  blocky = {
-    certFile = "${config.security.acme.certs.${dnsDomain}.directory}/fullchain.pem"; 
-    keyFile = "${config.security.acme.certs.${dnsDomain}.directory}/key.pem";
-  };
+
   environment.systemPackages = with pkgs; [
     git
     filebrowser
@@ -67,9 +70,9 @@ in  {
   time.timeZone = "Europe/Paris";
 
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true; 
-  
-  networking.firewall.enable = true; #enable firewall 
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  networking.firewall.enable = true; #enable firewall
   networking.firewall.allowedTCPPorts = [80 443]; #open ports for applications and acme (80, 443)
   networking.firewall.allowedUDPPorts = [80 443]; #open ports for applications and acme (80, 443)
 
@@ -89,8 +92,8 @@ in  {
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     clientMaxBodySize = "10g";
-    virtualHosts = 
-      let 
+    virtualHosts =
+      let
         SSL = {
           enableACME = true;
           forceSSL = true;
@@ -145,27 +148,28 @@ in  {
           proxyWebsockets = true;
         };});
 
-        "dev.vivenot.dev" = (SSL // {locations."/" = { # Ports 13000-14000 : propriété de william
+        # Ports 13000-14000 : propriété de william
+        "dev.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:13000";
           proxyWebsockets = true;
         };});
-	"file.vivenot.dev" = (SSL // {locations."/" = {
+	      "file.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:13001";
           proxyWebsockets = true;
         };});
-	"filedev.vivenot.dev" = (SSL // {locations."/" = {
+	      "filedev.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:13002";
           proxyWebsockets = true;
-        };}); 
+        };});
         "setdle.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:13003";
           proxyWebsockets = true;
-        };}); 
-        "kafka.vivenot.dev" = (SSL // {locations."/" = {
+        };});
+
+        /*"kafka.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:14080";
           proxyWebsockets = true;
-        };});
+          };})*/
     };
   };
 }
-

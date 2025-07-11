@@ -1,5 +1,5 @@
 {
-  description = "My flake";
+  description = "a general flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.05";
@@ -38,7 +38,7 @@
         ./profiles/${profile}/configuration.nix
       ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
       specialArgs = {
-        inherit users;
+        inherit users hostname;
       };
     };
   };

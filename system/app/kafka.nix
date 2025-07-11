@@ -11,6 +11,8 @@
   };
   config = {
     environment.systemPackages = with pkgs; [ apacheKafka ];
+    networking.firewall.allowedTCPPorts = [ config.kafka.textPort ];
+    networking.firewall.allowedUDPPorts = [ config.kafka.textPort ];
     services.apache-kafka = {
       enable = true;
       clusterId = "QKRy5pBhSr2vOw3xxDa-sQ";

@@ -1,5 +1,7 @@
 { config, lib, pkgs, users, ... }:
-{
+let 
+  dnsDomain = "dns.vivenot.dev"; 
+in  {
   imports = [
     ../../system/security/wireguard.nix
     ../../system/security/ssh.nix
@@ -10,7 +12,8 @@
     ../../system/fonts.nix
     ../../system/app/pedantix-solver.nix
     ../../system/backup/minio.nix
-    ../../system/app/kafka.nix
+    #../../system/app/kafka.nix
+    ../../system/security/blocky.nix
   ];
   
   wireguard = { #define wireguard options 
@@ -41,10 +44,14 @@
     prefix = "backup";
     retention = 5;
   };
-  kafka = {
+  /*kafka = {
     publicIp = "vivenot.dev";
     textPort = 9092;
     controllerPort = 9093;
+  };*/
+  blocky = {
+    certFile = "${config.security.acme.certs.${dnsDomain}.directory}/fullchain.pem"; 
+    keyFile = "${config.security.acme.certs.${dnsDomain}.directory}/key.pem";
   };
   environment.systemPackages = with pkgs; [
     git
@@ -63,12 +70,17 @@
   boot.loader.efi.canTouchEfiVariables = true; 
   
   networking.firewall.enable = true; #enable firewall 
-  networking.firewall.allowedTCPPorts = [80 443 9092 8000]; #open ports for applications and acme (80, 443)
-  networking.firewall.allowedUDPPorts = [80 443 9092]; #open ports for applications and acme (80, 443)
+  networking.firewall.allowedTCPPorts = [80 443]; #open ports for applications and acme (80, 443)
+  networking.firewall.allowedUDPPorts = [80 443]; #open ports for applications and acme (80, 443)
 
   security.acme = {
     acceptTerms = true;
     defaults.email = "axel.vivenot@outlook.fr";
+    certs.${dnsDomain} = {
+      dnsProvider = "cloudflare";
+      environmentFile = "/root/cloudflare"; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
+      #group = "blocky"; #do this if you don't want to set 'acme' in the groups of the dns
+    };
   };
   services.nginx = {
     enable = true;
@@ -147,6 +159,10 @@
         };}); 
         "setdle.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:13003";
+          proxyWebsockets = true;
+        };}); 
+        "kafka.vivenot.dev" = (SSL // {locations."/" = {
+          proxyPass = "http://localhost:14080";
           proxyWebsockets = true;
         };});
     };

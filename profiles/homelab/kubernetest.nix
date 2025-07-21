@@ -1,5 +1,13 @@
 { ... }:
+let
+    unstable = import (builtins.fetchGit {
+    url = "https://github.com/nixos/nixpkgs/";
+    ref = "refs/heads/nixos-unstable";
+    rev = "6b4955211758ba47fac850c040a27f23b9b4008f";
+}) {}
+in
 {
+
   networking.firewall.allowedTCPPorts = [
     6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
     # 2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
@@ -8,6 +16,7 @@
   networking.firewall.allowedUDPPorts = [
     # 8472 # k3s, flannel: required if using multi-node for inter-node networking
   ];
+  services.k3s = unstable.nixosModules.services.k3s;
   services.k3s.enable = true;
   services.k3s.role = "server";
   services.k3s.extraFlags = toString [

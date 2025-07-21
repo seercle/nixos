@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ../../../../user/app/git.nix
-    ../../../../user/shell/fish.nix
-    ../../../../user/shell/aliases.nix
-    ../../../../user/shell/starship/starship.nix
+    ../../../../user/app/git
+    ../../../../user/shell/fish
+    ../../../../user/shell/aliases
+    ../../../../user/shell/starship/starship
   ];
   programs.thefuck.enable = true;
   git.userName = "seercle";

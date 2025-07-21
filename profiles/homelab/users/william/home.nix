@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ../../../../user/shell/fish.nix
-    ../../../../user/shell/aliases.nix
-#    ../../../../user/shell/starship/starship.nix
-    ../../../../user/app/git.nix
+    ../../../../user/shell/fish
+    ../../../../user/shell/aliases
+#    ../../../../user/shell/starship/starship
+    ../../../../user/app/git
   ];
   git.userName = "SandwichGouda";
   git.userEmail = "william.driot@gmail.com";

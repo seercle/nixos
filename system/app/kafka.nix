@@ -1,35 +1,49 @@
 { lib, config, pkgs, ... }:
+let
+  service = "kafka";
+  cfg = config.${service};
+in
 {
-  options.kafka.publicIp = lib.mkOption {
-    type = lib.types.str;
+  options.${service} = with lib; {
+    enable = mkEnableOption {
+      description = "Enable Apache Kafka service";
+    };
+    publicIp = mkOption {
+      type = types.str;
+      description = "Public IP address of the Kafka broker";
+    };
+    textPort = mkOption {
+      type = types.ints.unsigned;
+      default = 9092;
+      description = "Port for plaintext communication with Kafka";
+    };
+    controllerPort = mkOption {
+      type = types.ints.unsigned;
+      default = 9093;
+      description = "Port for controller communication in Kafka";
+    };
   };
-  options.kafka.textPort = lib.mkOption {
-    type = lib.types.ints.unsigned;
-  };
-  options.kafka.controllerPort = lib.mkOption {
-    type = lib.types.ints.unsigned;
-  };
-  config = {
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ apacheKafka ];
-    networking.firewall.allowedTCPPorts = [ config.kafka.textPort ];
-    networking.firewall.allowedUDPPorts = [ config.kafka.textPort ];
+    networking.firewall.allowedTCPPorts = [ cfg.textPort ];
+    networking.firewall.allowedUDPPorts = [ cfg.textPort ];
     services.apache-kafka = {
       enable = true;
       clusterId = "QKRy5pBhSr2vOw3xxDa-sQ";
       formatLogDirs = true;
       settings = {
         listeners = [
-          "PLAINTEXT://:${toString config.kafka.textPort}"
-          "CONTROLLER://:${toString config.kafka.controllerPort}"
+          "PLAINTEXT://:${toString cfg.textPort}"
+          "CONTROLLER://:${toString cfg.controllerPort}"
         ];
-        "advertised.listeners" = "PLAINTEXT://${config.kafka.publicIp}:${toString config.kafka.textPort}";
+        "advertised.listeners" = "PLAINTEXT://${cfg.publicIp}:${toString cfg.textPort}";
         # Adapt depending on your security constraints
         "listener.security.protocol.map" = [
           "PLAINTEXT:PLAINTEXT"
           "CONTROLLER:PLAINTEXT"
         ];
         "controller.quorum.voters" = [
-          "1@127.0.0.1:${toString config.kafka.controllerPort}"
+          "1@127.0.0.1:${toString cfg.controllerPort}"
         ];
         "controller.listener.names" = ["CONTROLLER"];
         "node.id" = 1;

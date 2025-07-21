@@ -13,8 +13,8 @@ in  {
 
     ../../system/app/docker.nix
     ../../system/app/pedantix-solver.nix
+    ../../system/app/nix-ld.nix
     #../../system/app/gitlab.nix
-    #../../system/app/pelican.nix
     #../../system/app/kafka.nix
     #../../system/fonts.nix
   ];
@@ -36,13 +36,17 @@ in  {
     enable = true;
     port = 22;
   };
-  docker.usernames = users;
+  docker = {
+   enable = true;
+   usernames = users;
+  }
   wol = {
     enable = true;
     interface = "enp4s0";
   };
   fail2ban.enable = true;
   pedantix-solver = {
+    enable = true;
     path = "/home/axel/ssd/pedantix-solver";
     shellPath = "./shell.nix";
     filePath = "./solver.py";
@@ -62,7 +66,9 @@ in  {
     certFile = "${config.security.acme.certs.${dnsDomain}.directory}/fullchain.pem";
     keyFile = "${config.security.acme.certs.${dnsDomain}.directory}/key.pem";
   };
+  nix-ld.enable = true;
   /*kafka = {
+    enable = true;
     publicIp = "vivenot.dev";
     textPort = 9092;
     controllerPort = 9093;
@@ -83,11 +89,6 @@ in  {
     filebrowser
     tree
   ];
-
-  programs.nix-ld = { # Allows NixOS to run unpatched dynamically linked binaries
-    enable = true;
-    package = pkgs.nix-ld-rs;
-  };
 
   time.timeZone = "Europe/Paris";
 

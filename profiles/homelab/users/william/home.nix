@@ -3,7 +3,7 @@
   imports = [
     ../../../../user/shell/fish
     ../../../../user/shell/aliases
-#    ../../../../user/shell/starship/starship
+#    ../../../../user/shell/starship
     ../../../../user/app/git
   ];
   git.userName = "SandwichGouda";

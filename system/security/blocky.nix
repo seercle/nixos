@@ -5,7 +5,7 @@ let
 in
   {
     options.${service} = with lib; {
-      enable = .mkEnableOption {
+      enable = mkEnableOption {
         description = "Enable ${service}";
       };
       certFile = mkOption {

@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, config, lib, ... }:
 let
   service = "fail2ban";
   cfg = config.${service};
@@ -25,5 +25,5 @@ in
         overalljails = true; # Calculate the bantime based on all the violations
         };
     };
-  }
+  };
 }

@@ -13,7 +13,7 @@ in  {
 
     ../../system/app/docker.nix
     ../../system/app/pedantix-solver.nix
-    ../../system/app/gitlab.nix
+    #../../system/app/gitlab.nix
     #../../system/app/pelican.nix
     #../../system/app/kafka.nix
     #../../system/fonts.nix
@@ -35,11 +35,11 @@ in  {
   ssh = {
     enable = true;
     port = 22;
-  }
+  };
   docker.usernames = users;
   wol = {
     enable = true;
-    interface = "enp4s0"
+    interface = "enp4s0";
   };
   fail2ban.enable = true;
   pedantix-solver = {
@@ -48,7 +48,7 @@ in  {
     filePath = "./solver.py";
     logPath = "./job.log";
   };
-  minio = {
+  minio-backup = {
     enable = true;
     configFile = "/root/minio/config.json";
     calendar = "weekly";
@@ -67,6 +67,7 @@ in  {
     textPort = 9092;
     controllerPort = 9093;
   };*/
+/*
   gitlab = {
     httpPort = 4080;
     httpsPort = 4443;
@@ -76,7 +77,7 @@ in  {
     logPath = "${gitlabPath}/logs";
     dataPath = "${gitlabPath}/data";
   };
-
+*/
   environment.systemPackages = with pkgs; [
     git
     filebrowser

@@ -2,7 +2,7 @@
 let
     service = "wireguard";
     cfg = config.${service};
-in {
+in 
 {
   options.${service} = with lib; {
     enable = mkEnableOption {
@@ -21,7 +21,7 @@ in {
       type = types.listOf types.str;
     };
     peers = mkOption {
-      type = types.listOf (submodule {
+      type = types.listOf (types.submodule {
         options = {
           publicKey = mkOption {
             type = types.str;

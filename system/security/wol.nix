@@ -2,7 +2,7 @@
 let
     service = "wol";
     cfg = config.${service};
-in {
+in
 {
   options.${service} = with lib; {
     enable = mkEnableOption {

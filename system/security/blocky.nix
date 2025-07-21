@@ -1,13 +1,23 @@
 { lib, config, ... }:
-{
-  options.blocky.certFile = lib.mkOption {
-    type = lib.types.str;
-  };
-  options.blocky.keyFile = lib.mkOption {
-    type = lib.types.str;
-  };
-  
-  config = {
+let
+  service = "blocky";
+  cfg = config.${service};
+in
+  {
+    options.${service} = with lib; {
+      enable = .mkEnableOption {
+        description = "Enable ${service}";
+      };
+      certFile = mkOption {
+        type = types.str;
+        description = "Path to the certificate file for Blocky.";
+      };
+      keyFile = mkOption {
+        type = types.str;
+        description = "Path to the key file for Blocky.";
+      };
+    };
+  config = lib.mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [53 853];
     networking.firewall.allowedUDPPorts = [53];
     users.users.blocky = {
@@ -23,8 +33,8 @@
           "https://one.one.one.one/dns-query" # Using Cloudflare's DNS over HTTPS server for resolving queries.
         ];
         ports.tls = 853;
-        certFile = config.blocky.certFile;
-        keyFile = config.blocky.keyFile;
+        certFile = cfg.certFile;
+        keyFile = cfg.keyFile;
         # For initially solving DoH/DoT Requests when no system Resolver is available.
         bootstrapDns = {
           upstream = "https://one.one.one.one/dns-query";

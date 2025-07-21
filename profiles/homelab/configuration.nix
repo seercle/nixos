@@ -20,6 +20,7 @@ in  {
   ];
 
   wireguard = {
+    enable = true;
     port = 51820;
     externalInterface = "enp4s0";
     privateKeyFile = "/root/vpn/wg-private";
@@ -31,8 +32,16 @@ in  {
       }
     ];
   };
+  ssh = {
+    enable = true;
+    port = 22;
+  }
   docker.usernames = users;
-  wol.interface = "enp4s0";
+  wol = {
+    enable = true;
+    interface = "enp4s0"
+  };
+  fail2ban.enable = true;
   pedantix-solver = {
     path = "/home/axel/ssd/pedantix-solver";
     shellPath = "./shell.nix";
@@ -40,6 +49,7 @@ in  {
     logPath = "./job.log";
   };
   minio = {
+    enable = true;
     configFile = "/root/minio/config.json";
     calendar = "weekly";
     bucket = "xxgoldenbluexx/hyez";
@@ -48,6 +58,7 @@ in  {
     retention = 5;
   };
   blocky = {
+    enable = true;
     certFile = "${config.security.acme.certs.${dnsDomain}.directory}/fullchain.pem";
     keyFile = "${config.security.acme.certs.${dnsDomain}.directory}/key.pem";
   };

@@ -1,44 +1,52 @@
 { lib, config, pkgs, ... }:
-with lib;
-with lib.types;
+let
+    service = "wireguard";
+    cfg = config.${service};
+in {
 {
-  options.wireguard.port = mkOption {
-    type = int;
-  };
-  options.wireguard.externalInterface = mkOption {
-    type = str;
-  };
-  options.wireguard.privateKeyFile = mkOption {
-    type = str;
-  };
-  options.wireguard.ips = mkOption {
-    type = listOf str;
-  };
-  options.wireguard.peers = mkOption {
-    type = listOf (submodule {
-      options = {
-        publicKey = mkOption {
-          type = str;
+  options.${service} = with lib; {
+    enable = mkEnableOption {
+      description = "Enable WireGuard VPN server";
+    };
+    port = mkOption {
+      type = types.int;
+    };
+    externalInterface = mkOption {
+      type = types.str;
+    };
+    privateKeyFile = mkOption {
+      type = types.str;
+    };
+    ips = mkOption {
+      type = types.listOf types.str;
+    };
+    peers = mkOption {
+      type = types.listOf (submodule {
+        options = {
+          publicKey = mkOption {
+            type = types.str;
+          };
+          allowedIPs = mkOption {
+            type = types.listOf types.str;
+          };
         };
-        allowedIPs = mkOption {
-          type = listOf str;
-        };
-      };
-    });
+      });
+    };
   };
 
-  config = {
+
+  config = lib.mkIf cfg.enable {
     networking.nat.enable = true;
-    networking.firewall.allowedUDPPorts = [config.wireguard.port];
-    networking.nat.externalInterface = config.wireguard.externalInterface;
+    networking.firewall.allowedUDPPorts = [cfg.port];
+    networking.nat.externalInterface = cfg.externalInterface;
     networking.nat.internalInterfaces = [ "wg0" ];
     environment.systemPackages = [ pkgs.wireguard-tools ];
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = config.wireguard.ips;
-        listenPort =  config.wireguard.port;
-        privateKeyFile = config.wireguard.privateKeyFile;
-        peers = config.wireguard.peers;
+        ips = cfg.ips;
+        listenPort =  cfg.port;
+        privateKeyFile = cfg.privateKeyFile;
+        peers = cfg.peers;
       };
     };
   };

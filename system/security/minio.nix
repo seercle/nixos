@@ -1,8 +1,12 @@
 { lib, config, pkgs, ...}:
-let 
-  service = "minio-backup";
+let
+    service = "minio-backup";
+    cfg = config.${service};
 in {
-  options.minio = with lib; {
+  options.${service} = with lib; {
+    enable = mkEnableOption {
+        description = "Enable ${service} for backing up files to MinIO";
+    };
     configFile = mkOption {
       type = types.str;
       description = "Path to the file containing the MinIO configuration";
@@ -10,6 +14,7 @@ in {
     calendar = mkOption {
       type = types.str;
       description = "Interval between backups";
+
     };
     bucket = mkOption {
       type = types.str;
@@ -28,15 +33,16 @@ in {
       description = "Number of backups to keep in the bucket";
     };
   };
-  config = {
+
+  config = lib.mkIf cfg.enable {
     systemd.timers.${service} = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = config.minio.calendar;
-        Persistent = true; 
+        OnCalendar = cfg.calendar;
+        Persistent = true;
       };
     };
-    systemd.services.${service} = with config.minio; {
+    systemd.services.${service} = with cfg; {
       path = with pkgs; [coreutils gawk zstd gnutar minio-client];
 
       preStart = ''

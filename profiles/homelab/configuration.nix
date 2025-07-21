@@ -4,18 +4,18 @@ let
   gitlabPath = "/mnt/sdb1/gitlab";
 in  {
   imports = [
-    ../../system/security/wireguard.nix
-    ../../system/security/ssh.nix
-    ../../system/security/wol.nix
-    ../../system/security/fail2ban.nix
-    ../../system/security/blocky.nix
-    ../../system/security/minio.nix
+    ../../system/security/wireguard
+    ../../system/security/ssh
+    ../../system/security/wol
+    ../../system/security/fail2ban
+    ../../system/security/blocky
+    ../../system/security/minio-backup
 
-    ../../system/app/docker.nix
-    ../../system/app/pedantix-solver.nix
-    ../../system/app/nix-ld.nix
-    #../../system/app/gitlab.nix
-    #../../system/app/kafka.nix
+    ../../system/app/docker
+    ../../system/app/pedantix-solver
+    ../../system/app/nix-ld
+    #../../system/app/gitlab
+    #../../system/app/kafka
     #../../system/fonts.nix
   ];
 

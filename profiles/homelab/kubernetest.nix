@@ -13,4 +13,5 @@
   services.k3s.extraFlags = toString [
     # "--debug" # Optionally add additional args to k3s
   ];
+  services.k3s.manifests."nginx".source = ./nginx.yaml;
 }

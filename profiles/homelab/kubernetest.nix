@@ -20,4 +20,5 @@
     # "--debug" # Optionally add additional args to k3s
   ];
   services.k3s.manifests."nginx".source = ./nginx.yaml;
+  services.k3s.manifests."nginx-port".source = ./nodeport.yaml;
 }

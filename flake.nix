@@ -41,7 +41,7 @@
       specialArgs = {
         inherit users hostname;
         unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
-        unstableModules = nixpkgs-unstable.lib.nixosSystemModules;
+        unstableNixpkgs = nixpkgs-unstable;
       };
     };
   };

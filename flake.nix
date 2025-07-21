@@ -14,24 +14,24 @@
   outputs = inputs@{self, nixpkgs-24-05, nixpkgs-25-05, nixpkgs-unstable, home-manager-24-05, ...}:
 
   let
-    #getPkgs = some_nixpkgs: some_nixpkgs.legacyPackages.${system};
+    getPkgs = some_nixpkgs: some_nixpkgs.legacyPackages.${system};
 
     profile = "homelab"; #profile to select, must be contained in the profiles directory
     hostname = "homelab";
     system = "x86_64-linux";
     users = ["axel" "william"]; #users to select, must be contained in the users directory of the profile directory
-    #nixpkgs-version = nixpkgs-24-05;
-    #home-manager-version = home-manager-24-05;
-    #allPkgs = {
-    #  pkgs24-05 = nixpkgs-24-05.legacyPackages.${system};
-    #  pkgs25-05 = nixpkgs-25-05.legacyPackages.${system};
-    #  pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
-    #};
+    nixpkgs = nixpkgs-24-05;
+    home-manager = home-manager-24-05;
+    allPkgs = {
+      pkgs24-05 = getPkgs nixpkgs-24-05;
+      pkgs25-05 = getPkgs nixpkgs-25-05;
+      pkgsUnstable = getPkgs nixpkgs-unstable;
+    };
   in {
     homeConfigurations = builtins.listToAttrs (builtins.map(user: {
       name = user;
-      value = home-manager-24-05.lib.homeManagerConfiguration {
-        pkgs = nixpkgs-24-05.legacyPackages.${system};
+      value = home-manager.lib.homeManagerConfiguration {
+        pkgs = getPkgs nixpkgs-24-05;
         modules = [
           ./home.nix
           ./profiles/${profile}/home.nix
@@ -39,10 +39,10 @@
         ];
         extraSpecialArgs = {
           inherit user;
-        };
+        } // allPkgs;
       };
     }) users);
-    nixosConfigurations.${hostname} = nixpkgs-24-05.lib.nixosSystem {
+    nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
       system = system;
       modules = [
         ./configuration.nix
@@ -50,8 +50,7 @@
       ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
       specialArgs = {
         inherit users hostname;
-pkgs25-05 = nixpkgs-25-05.legacyPackages.${system};
-      };
+      } // allPkgs;
     };
   };
 }

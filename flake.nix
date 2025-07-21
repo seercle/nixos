@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs-24-05";
     };
   };
-  outputs = inputs@{self, nixpkgs-24-05, nixpkgs-unstable, home-manager,...}:
+  outputs = inputs@{self, nixpkgs-24-05, nixpkgs-25-05, nixpkgs-unstable, home-manager,...}:
 
   let
     profile = "homelab"; #profile to select, must be contained in the profiles directory
@@ -21,7 +21,7 @@
     homeConfigurations = builtins.listToAttrs (builtins.map(user: {
       name = user;
       value = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs-24-05.packages.${system};
+        pkgs = nixpkgs-24-05.legacyPackages.${system};
         modules = [
           ./home.nix
           ./profiles/${profile}/home.nix
@@ -41,9 +41,9 @@
       ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
       specialArgs = {
         inherit users hostname;
-        pkgs24-05 = nixpkgs-24-05.packages.${system};
-        pkgs25-05 = nixpkgs-25-05.packages.${system};
-        pkgsUnstable = nixpkgs-unstable.packages.${system};
+        pkgs24-05 = nixpkgs-24-05.legacyPackages.${system};
+        pkgs25-05 = nixpkgs-25-05.legacyPackages.${system};
+        pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
       };
     };
   };

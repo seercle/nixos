@@ -17,6 +17,7 @@ in  {
     #../../system/app/gitlab
     #../../system/app/kafka
     #../../system/fonts.nix
+    ./kubernetest.nix
   ];
 
   wireguard = {

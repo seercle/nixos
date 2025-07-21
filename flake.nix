@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs-24-05.url = "github:nixos/nixpkgs?ref=nixos-24.05";
+    nixpkgs-25-05.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -20,7 +21,7 @@
     homeConfigurations = builtins.listToAttrs (builtins.map(user: {
       name = user;
       value = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs-24-05.legacyPackages.${system};
+        pkgs = nixpkgs-24-05.packages.${system};
         modules = [
           ./home.nix
           ./profiles/${profile}/home.nix
@@ -40,8 +41,9 @@
       ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
       specialArgs = {
         inherit users hostname;
-        unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
-        unstableNixpkgs = nixpkgs-unstable;
+        pkgs24-05 = nixpkgs-24-05.packages.${system};
+        pkgs25-05 = nixpkgs-25-05.packages.${system};
+        pkgsUnstable = nixpkgs-unstable.packages.${system};
       };
     };
   };

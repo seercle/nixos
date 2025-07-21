@@ -39,7 +39,7 @@ in  {
   docker = {
    enable = true;
    usernames = users;
-  }
+  };
   wol = {
     enable = true;
     interface = "enp4s0";

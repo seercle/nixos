@@ -1,6 +1,7 @@
 { config, lib, pkgs, users, ... }:
 let
   dnsDomain = "dns.vivenot.dev";
+  gitlabPath = "/mnt/sdb1/gitlab";
 in  {
   imports = [
     ../../system/security/wireguard.nix
@@ -12,9 +13,9 @@ in  {
 
     ../../system/app/docker.nix
     ../../system/app/pedantix-solver.nix
+    ../../system/app/gitlab.nix
     #../../system/app/pelican.nix
     #../../system/app/kafka.nix
-
     #../../system/fonts.nix
   ];
 
@@ -55,6 +56,15 @@ in  {
     textPort = 9092;
     controllerPort = 9093;
   };*/
+  gitlab = {
+    httpPort = 4080;
+    httpsPort = 4443;
+    sshPort = 4022;
+    hostname = "gitlab.vivenot.dev";
+    configPath = "${gitlabPath}/config";
+    logPath = "${gitlabPath}/logs";
+    dataPath = "${gitlabPath}/data";
+  };
 
   environment.systemPackages = with pkgs; [
     git

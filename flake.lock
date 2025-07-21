@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "home-manager": {
+    "home-manager-24-05": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs-24-05"
@@ -17,6 +17,27 @@
       "original": {
         "owner": "nix-community",
         "ref": "release-24.05",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager-25-05": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-25-05"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753055804,
+        "narHash": "sha256-KerePGJYX47ex6OY3CWsid4AltO2gDtQROunYJ0eCEE=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "adf195f021a8cbb0c317f75b52e96c82616526f9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-25.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -71,7 +92,8 @@
     },
     "root": {
       "inputs": {
-        "home-manager": "home-manager",
+        "home-manager-24-05": "home-manager-24-05",
+        "home-manager-25-05": "home-manager-25-05",
         "nixpkgs-24-05": "nixpkgs-24-05",
         "nixpkgs-25-05": "nixpkgs-25-05",
         "nixpkgs-unstable": "nixpkgs-unstable"

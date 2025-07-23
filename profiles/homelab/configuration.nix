@@ -1,7 +1,7 @@
 { config, lib, pkgs, users, ... }:
 let
   dnsDomain = "dns.vivenot.dev";
-  gitlabPath = "/mnt/sdb1/gitlab";
+  #gitlabPath = "/mnt/sdb1/gitlab";
 in  {
   imports = [
     ../../system/security/wireguard
@@ -63,7 +63,8 @@ in  {
     retention = 5;
   };
   blocky = {
-    enable = true;
+    #enable = true;
+    enable = false;
     certFile = "${config.security.acme.certs.${dnsDomain}.directory}/fullchain.pem";
     keyFile = "${config.security.acme.certs.${dnsDomain}.directory}/key.pem";
   };
@@ -111,21 +112,24 @@ in  {
   };
   services.nginx = {
     enable = true;
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
-    clientMaxBodySize = "10g";
+    #recommendedGzipSettings = true;
+    #recommendedOptimisation = true;
+    #recommendedProxySettings = true;
+    #recommendedTlsSettings = true;
+    #clientMaxBodySize = "10g";
     virtualHosts =
       let
         SSL = {
-          enableACME = true;
-          forceSSL = true;
+          enableACME = false;
+          forceSSL = false;
         };
       in  {
         "vw.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://192.168.1.9:1080";
         };});
+        "test.vivenot.dev" = (SSL // {locations."/" = {
+          proxyPass = "http://192.168.1.9:8000";
+        };});/*
         "authentik.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://192.168.1.9:2080";
           proxyWebsockets = true;
@@ -167,6 +171,7 @@ in  {
           proxyPass = "http://localhost:11901";
           proxyWebsockets = true;
         };});
+
         "3a.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:12080";
           proxyWebsockets = true;

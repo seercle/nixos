@@ -24,5 +24,5 @@
     "local-path-provisioner-ssd".source = ./local-path-provisioner-ssd.yaml;
     "pvc-nextcloud-app".source = ./pvc-nextcloud-app.yaml;
     "pvc-nextcloud-data".source = ./pvc-nextcloud-data.yaml;
-  }
+  };
 }

@@ -8,4 +8,4 @@ spec:
   resources:
     requests:
       storage: 20G # Request sufficient storage from the SSD
-  storageClassName: nextcloud-ssd
+  storageClassName: local-path-ssd

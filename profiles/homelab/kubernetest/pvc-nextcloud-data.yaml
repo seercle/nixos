@@ -8,4 +8,4 @@ spec:
   resources:
     requests:
       storage: 500G # Request sufficient storage from the HDD
-  storageClassName: nextcloud-hdd
+  storageClassName: local-path-hdd

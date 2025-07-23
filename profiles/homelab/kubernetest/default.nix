@@ -19,12 +19,10 @@
   services.k3s.extraFlags = toString [
     # "--debug" # Optionally add additional args to k3s
   ];
-  services.k3s.manifests."nginx".source = ./nginx.yaml;
-  services.k3s.manifests."nginx-port".source = ./nodeport.yaml;
-  services.k3s.manifests."nginx-pv-hdd".source = ./pv-nextcloud-data-hdd.yaml;
-  services.k3s.manifests."nginx-pv-ssd".source = ./pv-nextcloud-data-ssd.yaml;
-  services.k3s.manifests."nginx-sc-hdd".source = ./storageclass-hdd.yaml;
-  services.k3s.manifests."nginx-sc-hdd".source = ./storageclass-ssd.yaml;
-  services.k3s.manifests."nginx-sc-ssd".source = ./pvc-nextcloud-app.yaml;
-  services.k3s.manifests."nginx-sc-ssd".source = ./pvc-nextcloud-data.yaml;
+  services.k3s.manifests = {
+    "local-path-provisioner-hdd".source = ./local-path-provisioner-hdd.yaml;
+    "local-path-provisioner-ssd".source = ./local-path-provisioner-ssd.yaml;
+    "pvc-nextcloud-app".source = ./pvc-nextcloud-app.yaml;
+    "pvc-nextcloud-data".source = ./pvc-nextcloud-data.yaml;
+  }
 }

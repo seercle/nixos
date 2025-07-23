@@ -17,7 +17,7 @@ in  {
     #../../system/app/gitlab
     #../../system/app/kafka
     #../../system/fonts.nix
-    #./kubernetest
+    ./kubernetest
   ];
 
   wireguard = {
@@ -112,11 +112,11 @@ in  {
   };
   services.nginx = {
     enable = true;
-    #recommendedGzipSettings = true;
-    #recommendedOptimisation = true;
-    #recommendedProxySettings = true;
-    #recommendedTlsSettings = true;
-    #clientMaxBodySize = "10g";
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+    clientMaxBodySize = "10g";
     virtualHosts =
       let
         SSL = {
@@ -127,9 +127,6 @@ in  {
         "vw.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://192.168.1.9:1080";
         };});
-        "test.vivenot.dev" = (SSL // {locations."/" = {
-          proxyPass = "http://192.168.1.9:8000";
-        };});/*
         "authentik.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://192.168.1.9:2080";
           proxyWebsockets = true;
@@ -171,13 +168,14 @@ in  {
           proxyPass = "http://localhost:11901";
           proxyWebsockets = true;
         };});
-
+/*
         "3a.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:12080";
           proxyWebsockets = true;
         };});
-
+*/
         # Ports 13000-14000 : propriété de william
+
         "dev.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:13000";
           proxyWebsockets = true;

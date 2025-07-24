@@ -120,8 +120,8 @@ in  {
     virtualHosts =
       let
         SSL = {
-          enableACME = false;
-          forceSSL = false;
+          enableACME = true;
+          forceSSL = true;
         };
       in  {
         "vw.vivenot.dev" = (SSL // {locations."/" = {

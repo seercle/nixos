@@ -35,7 +35,7 @@ in  {
     enable = true;
     port = 51820;
     externalInterface = "enp4s0";
-    privateKey = "${config.sops.secrets.WG_PRIVATE_KEY}";
+    privateKey = config.sops.secrets.WG_PRIVATE_KEY;
     ips = ["10.0.0.1/24"];
     peers = [
       {
@@ -118,7 +118,7 @@ in  {
     defaults.email = "axel.vivenot@outlook.fr";
     certs.${dnsDomain} = {
       dnsProvider = "cloudflare";
-      environmentFile = "${config.sops.secrets.CLOUDFLARE_DNS_API_TOKEN}"; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
+      environmentFile = config.sops.secrets.CLOUDFLARE_DNS_API_TOKEN; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
       #group = "blocky"; #do this if you don't want to set 'acme' in the groups of the dns
     };
   };

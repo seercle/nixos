@@ -1,4 +1,4 @@
-{ config, lib, pkgs, users, sops, ... }:
+{ config, lib, pkgs, users, ... }:
 let
   dnsDomain = "dns.vivenot.dev";
   #gitlabPath = "/mnt/sdb1/gitlab";
@@ -21,21 +21,23 @@ in  {
     ./kubernetest
   ];
   sops.secrets = {
-    defaultSopsFile = ../../system/security/sops/secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
-    WG_PRIVATE_KEY = { };
-    CLOUDFLARE_DNS_API_TOKEN = { };
-    /*minio = {
-      sopsFile = "${secretsPath}/minio.json";
+    WG_PRIVATE_KEY = {};
+    CLOUDFLARE_DNS_API_TOKEN = {
+      format = "dotenv";
+      sopsFile = ../../system/security/sops/secrets/cloudflare.env;
+    };
+    minio = {
+      sopsFile = ../../system/security/sops/secrets/minio.json;
       format = "json";
-    };*/
+      key = "";
+    };
   };
 
   wireguard = {
     enable = true;
     port = 51820;
     externalInterface = "enp4s0";
-    privateKey = config.sops.secrets.WG_PRIVATE_KEY;
+    privateKeyFile = config.sops.secrets.WG_PRIVATE_KEY.path;
     ips = ["10.0.0.1/24"];
     peers = [
       {
@@ -66,8 +68,8 @@ in  {
   };
   minio-backup = {
     enable = true;
-    #configFile = "${secrets.minio}";
-    configFile = "/root/minio/config.json";
+    configFile = config.sops.secrets.minio.path;
+    #configFile = "/root/minio/config.json";
     calendar = "weekly";
     bucket = "xxgoldenbluexx/hyez";
     files = "/etc/nixos /mnt/sdb1/vaultwarden/vw-data /mnt/sda1/nextcloud/data /mnt/sdb1/gitlab/data/backups";
@@ -118,7 +120,7 @@ in  {
     defaults.email = "axel.vivenot@outlook.fr";
     certs.${dnsDomain} = {
       dnsProvider = "cloudflare";
-      environmentFile = config.sops.secrets.CLOUDFLARE_DNS_API_TOKEN; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
+      environmentFile = config.sops.secrets.CLOUDFLARE_DNS_API_TOKEN.path; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
       #group = "blocky"; #do this if you don't want to set 'acme' in the groups of the dns
     };
   };

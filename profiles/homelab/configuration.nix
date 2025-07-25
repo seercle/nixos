@@ -1,30 +1,43 @@
-{ config, lib, pkgs, users, ... }:
+{ config, lib, pkgs, users, sops, ... }:
 let
   dnsDomain = "dns.vivenot.dev";
+  secretsPath = "../../secrets";
+  systemPath = "../../system";
+  secrets = config.sops.secrets;
   #gitlabPath = "/mnt/sdb1/gitlab";
 in  {
   imports = [
-    ../../system/security/wireguard
-    ../../system/security/ssh
-    ../../system/security/wol
-    ../../system/security/fail2ban
-    ../../system/security/blocky
-    ../../system/security/minio-backup
-
-    ../../system/app/docker
-    ../../system/app/pedantix-solver
-    ../../system/app/nix-ld
+    ${systemPath}/security/wireguard
+    ${systemPath}/security/ssh
+    ${systemPath}/security/wol
+    ${systemPath}/security/fail2ban
+    ${systemPath}/security/blocky
+    ${systemPath}/security/minio-backup
+    ${systemPath}/app/docker
+    ${systemPath}/app/pedantix-solver
+    ${systemPath}/app/nix-ld
     #../../system/app/gitlab
     #../../system/app/kafka
     #../../system/fonts.nix
     ./kubernetest
   ];
+  sops.secrets = {
+    cloudflare = {
+      file = "${secretsPath}/cloudflare.yaml";
+    };
+    minio = {
+      file = "${secretsPath}/minio.json";
+    };
+    wireguard = {
+      file = "${secretsPath}/wg-private";
+   };
+  };
 
   wireguard = {
     enable = true;
     port = 51820;
     externalInterface = "enp4s0";
-    privateKeyFile = "/root/vpn/wg-private";
+    privateKeyFile = "${secrets.wireguard}";
     ips = ["10.0.0.1/24"];
     peers = [
       {
@@ -55,7 +68,7 @@ in  {
   };
   minio-backup = {
     enable = true;
-    configFile = "/root/minio/config.json";
+    configFile = "${secrets.minio}";
     calendar = "weekly";
     bucket = "xxgoldenbluexx/hyez";
     files = "/etc/nixos /mnt/sdb1/vaultwarden/vw-data /mnt/sda1/nextcloud/data /mnt/sdb1/gitlab/data/backups";
@@ -106,7 +119,7 @@ in  {
     defaults.email = "axel.vivenot@outlook.fr";
     certs.${dnsDomain} = {
       dnsProvider = "cloudflare";
-      environmentFile = "/root/cloudflare"; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
+      environmentFile = "${secrets.cloudflare}"; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
       #group = "blocky"; #do this if you don't want to set 'acme' in the groups of the dns
     };
   };

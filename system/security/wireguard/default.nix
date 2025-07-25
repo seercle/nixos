@@ -14,7 +14,7 @@ in
     externalInterface = mkOption {
       type = types.str;
     };
-    privateKeyFile = mkOption {
+    privateKey = mkOption {
       type = types.str;
     };
     ips = mkOption {
@@ -45,7 +45,7 @@ in
       wg0 = {
         ips = cfg.ips;
         listenPort =  cfg.port;
-        privateKeyFile = cfg.privateKeyFile;
+        privateKey = cfg.privateKey;
         peers = cfg.peers;
       };
     };

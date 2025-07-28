@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
 
   #disabledModules = [
@@ -26,7 +26,6 @@
     role = "server";
     extraFlags = toString [
         "--write-kubeconfig-mode \"0644\""
-        "--disable coredns"
         "--disable traefik"
         "--disable local-storage"
         "--disable metrics-server"

@@ -1,6 +1,6 @@
 { pkgs, ... }:
 # do not forget to enable the used shells in your home-manager config
-{  
+{
   home.shellAliases = {
     hms = "home-manager switch --flake /etc/nixos";
     nrs = "sudo nixos-rebuild switch --flake /etc/nixos";
@@ -12,13 +12,14 @@
     gitfetch = "onefetch";
     cat = "bat";
     s = "sudo";
+    k = "kubectl";
   };
   programs.zoxide = {
     enable = true;
     options = ["--cmd cd"];
   };
   home.packages = with pkgs; [
-    eza       #better ls 
+    eza       #better ls
     ripgrep   #faster grep
     bottom    #better htop
     fd        #better find
@@ -27,4 +28,3 @@
     bat       #better cat
   ];
 }
-

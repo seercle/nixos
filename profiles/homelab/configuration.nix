@@ -117,7 +117,7 @@ in  {
 
   security.acme = {
     acceptTerms = true;
-    defaults.email = "axel.vivenot@outlook.fr";
+    defaults.email = "notseercle@gmail.com";
     certs.${dnsDomain} = {
       dnsProvider = "cloudflare";
       environmentFile = config.sops.secrets.CLOUDFLARE_DNS_API_TOKEN.path; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'

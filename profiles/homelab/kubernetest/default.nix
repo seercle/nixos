@@ -1,12 +1,14 @@
-{ pkgs25-05, ... }:
+{ ... }:
 {
-  disabledModules = [
-    "services/cluster/k3s/default.nix" # Disable the existing k3s module from nixos-24.05
-  ];
+
+  #disabledModules = [
+  #  "services/cluster/k3s/default.nix" # Disable the existing k3s module from nixos-24.05
+  #];
   imports = [
-    "${pkgs25-05.path}/nixos/modules/services/cluster/k3s/default.nix"
-    ./local-path
+    #"${pkgs25-05.path}/nixos/modules/services/cluster/k3s/default.nix"
+    #./local-path
     #./cert-manager
+    #./ingress-nginx
     #./nextcloud
   ];
   networking.firewall = {

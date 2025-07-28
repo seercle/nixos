@@ -8,7 +8,7 @@
   ];
   programs.thefuck.enable = true;
   git.userName = "seercle";
-  git.userEmail = "axel.vivenot@outlook.fr";
+  git.userEmail = "notseercle@gmail.com";
   home.packages = with pkgs; [
     tldr
     bun

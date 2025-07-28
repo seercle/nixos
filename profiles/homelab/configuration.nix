@@ -1,8 +1,9 @@
 { config, lib, pkgs, users, ... }:
 let
   dnsDomain = "dns.vivenot.dev";
+  secrets = config.sops.secrets;
   #gitlabPath = "/mnt/sdb1/gitlab";
-in  {
+in {
   imports = [
     ../../system/security/wireguard
     ../../system/security/ssh
@@ -23,10 +24,11 @@ in  {
   sops.secrets = {
     WG_PRIVATE_KEY = {};
     CLOUDFLARE_DNS_API_TOKEN = {
-      format = "dotenv";
       sopsFile = ../../system/security/sops/secrets/cloudflare.env;
+      format = "dotenv";
+      key = "";
     };
-    minio = {
+    MINIO_CONFIG = {
       sopsFile = ../../system/security/sops/secrets/minio.json;
       format = "json";
       key = "";
@@ -37,7 +39,7 @@ in  {
     enable = true;
     port = 51820;
     externalInterface = "enp4s0";
-    privateKeyFile = config.sops.secrets.WG_PRIVATE_KEY.path;
+    privateKeyFile = secrets.WG_PRIVATE_KEY.path;
     ips = ["10.0.0.1/24"];
     peers = [
       {
@@ -68,7 +70,7 @@ in  {
   };
   minio-backup = {
     enable = true;
-    configFile = config.sops.secrets.minio.path;
+    configFile = secrets.MINIO_CONFIG.path;
     #configFile = "/root/minio/config.json";
     calendar = "weekly";
     bucket = "xxgoldenbluexx/hyez";
@@ -120,7 +122,7 @@ in  {
     defaults.email = "notseercle@gmail.com";
     certs.${dnsDomain} = {
       dnsProvider = "cloudflare";
-      environmentFile = config.sops.secrets.CLOUDFLARE_DNS_API_TOKEN.path; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
+      environmentFile = secrets.CLOUDFLARE_DNS_API_TOKEN.path; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
       #group = "blocky"; #do this if you don't want to set 'acme' in the groups of the dns
     };
   };

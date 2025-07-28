@@ -5,6 +5,6 @@
   ];
   services.k3s.manifests = {
       "metallb".source = ./metallb.yaml;
-      "adress-pool".source = ./address-pool.yaml;
+      "address-pool".source = ./address-pool.yaml;
   };
 }

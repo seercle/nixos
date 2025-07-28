@@ -1,6 +1,7 @@
-{ pkgs, ... }:
-{
-
+{ ... }:
+let
+  secrets = config.sops.secrets;
+in {
   #disabledModules = [
   #  "services/cluster/k3s/default.nix" # Disable the existing k3s module from nixos-24.05
   #];
@@ -11,6 +12,9 @@
     #./ingress-nginx
     #./nextcloud
   ];
+  sops.secrets = {
+    K3S_TOKEN = {};
+  };
   networking.firewall = {
     allowedTCPPorts = [
       6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
@@ -24,6 +28,7 @@
   services.k3s = {
     enable = true;
     role = "server";
+    token = secrets.K3S_TOKEN.value;
     extraFlags = toString [
         "--write-kubeconfig-mode \"0644\""
         "--disable traefik"

@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 let
   secrets = config.sops.secrets;
 in {
@@ -28,7 +28,7 @@ in {
   services.k3s = {
     enable = true;
     role = "server";
-    token = secrets.K3S_TOKEN.value;
+    tokenFile = secrets.K3S_TOKEN.path;
     extraFlags = toString [
         "--write-kubeconfig-mode \"0644\""
         "--disable traefik"

@@ -79,8 +79,7 @@ in {
     retention = 5;
   };
   blocky = {
-    #enable = true;
-    enable = false;
+    enable = true;
     certFile = "${config.security.acme.certs.${dnsDomain}.directory}/fullchain.pem";
     keyFile = "${config.security.acme.certs.${dnsDomain}.directory}/key.pem";
   };

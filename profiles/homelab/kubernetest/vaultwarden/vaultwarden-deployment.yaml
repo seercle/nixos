@@ -22,6 +22,11 @@ spec:
         env:
         - name: SIGNUPS_ALLOWED
           value: "false"
+        - name: ADMIN_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: vaultwarden-secret
+              key: ADMIN_TOKEN
         volumeMounts:
         - name: vaultwarden-data
           mountPath: /data

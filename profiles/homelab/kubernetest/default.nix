@@ -11,6 +11,7 @@ in {
     #./cert-manager
     #./ingress-nginx
     #./nextcloud
+    ./longhorn
   ];
   sops.secrets = {
     K3S_TOKEN = {};

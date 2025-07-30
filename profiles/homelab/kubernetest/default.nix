@@ -12,6 +12,7 @@ in {
     #./ingress-nginx
     #./nextcloud
     ./longhorn
+    ./minio
   ];
   sops.secrets = {
     K3S_TOKEN = {};

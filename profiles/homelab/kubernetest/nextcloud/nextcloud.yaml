@@ -1,0 +1,34 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: nextcloud
+  namespace: helm-chart
+spec:
+  repo: https://nextcloud.github.io/helm/
+  chart: nextcloud
+  version: 7.0.0
+  targetNamespace: nextcloud
+  valuesContent: |-
+    nextcloud:
+      host: nextcloud.vivenot.dev
+      existingSecret:
+        secretName: nextcloud-secret
+        usernameKey: NEXTCLOUD_ADMIN_USERNAME
+        passwordKey: NEXTCLOUD_ADMIN_PASSWORD
+    persistence:
+      enabled: true
+      storageClass: longhorn-ssd
+      size: 10Gi
+      nextcloudData:
+        enabled: true
+        storageClass: longhorn-hdd
+        size: 1Ti
+    internalDatabase.enabled: false
+    externalDatabase:
+      type: postgresql
+      host: postgre-postgresql.postgre.svc.cluster.local
+      user: nextcloud
+      database: nextcloud
+      existingSecret:
+        secretName: nextcloud-secret
+        passwordKey: NEXTCLOUD_DATABASE_PASSWORD

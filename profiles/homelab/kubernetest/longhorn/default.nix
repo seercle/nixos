@@ -8,7 +8,4 @@
       enable = true;
       name = "iqn.2020-08.org.linux-iscsi.initiatorhost:${hostname}";
   };
-  services.k3s.manifests = {
-    "longhorn".source = ./longhorn.yaml;
-  };
 }

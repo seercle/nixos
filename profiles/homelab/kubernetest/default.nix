@@ -7,10 +7,6 @@ in {
   #];
   imports = [
     #"${pkgs25-05.path}/nixos/modules/services/cluster/k3s/default.nix"
-    #./local-path
-    #./cert-manager
-    #./ingress-nginx
-    #./nextcloud
     ./longhorn
     ./minio
   ];

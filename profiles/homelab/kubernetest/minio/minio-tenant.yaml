@@ -24,7 +24,6 @@ spec:
         name: minio-tenant-secret
         existingSecret: true
 
-
     ingress:
       api:
         enabled: true

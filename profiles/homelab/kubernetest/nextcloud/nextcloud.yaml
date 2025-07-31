@@ -8,6 +8,7 @@ spec:
   chart: nextcloud
   version: 7.0.0
   targetNamespace: nextcloud
+  createNamespace: true
   valuesContent: |-
     nextcloud:
       host: nextcloud.vivenot.dev
@@ -24,11 +25,16 @@ spec:
         storageClass: longhorn-hdd
         size: 1Ti
     internalDatabase.enabled: false
+    
+    # This does not work for some reasons, will default to sqlite
     externalDatabase:
       type: postgresql
-      host: postgre-postgresql.postgre.svc.cluster.local
-      user: nextcloud
-      database: nextcloud
+      enabled: true
       existingSecret:
+        enabled: true
         secretName: nextcloud-secret
+        usernameKey: NEXTCLOUD_DATABASE_USERNAME
         passwordKey: NEXTCLOUD_DATABASE_PASSWORD
+        hostKey: NEXTCLOUD_DATABASE_HOST
+        databaseKey: NEXTCLOUD_DATABASE_NAME
+

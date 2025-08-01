@@ -9,6 +9,8 @@ in {
     #"${pkgs25-05.path}/nixos/modules/services/cluster/k3s/default.nix"
     ./longhorn
     ./minio
+    ./ingress-nginx
+    ./postgresql
   ];
   sops.secrets = {
     K3S_TOKEN = {};

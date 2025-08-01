@@ -69,7 +69,7 @@ in {
     logPath = "./job.log";
   };
   minio-backup = {
-    enable = true;
+    enable = false;
     configFile = secrets.MINIO_CONFIG.path;
     #configFile = "/root/minio/config.json";
     calendar = "weekly";
@@ -113,8 +113,6 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.firewall.enable = true; #enable firewall
-  networking.firewall.allowedTCPPorts = [80 443]; #open ports for applications and acme (80, 443)
-  networking.firewall.allowedUDPPorts = [80 443]; #open ports for applications and acme (80, 443)
 
   security.acme = {
     acceptTerms = true;
@@ -125,6 +123,7 @@ in {
       #group = "blocky"; #do this if you don't want to set 'acme' in the groups of the dns
     };
   };
+  /*
   services.nginx = {
     enable = true;
     recommendedGzipSettings = true;
@@ -183,12 +182,12 @@ in {
           proxyPass = "http://localhost:11901";
           proxyWebsockets = true;
         };});
-/*
+
         "3a.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:12080";
           proxyWebsockets = true;
         };});
-*/
+
         # Ports 13000-14000 : propriété de william
 
         "dev.vivenot.dev" = (SSL // {locations."/" = {
@@ -208,10 +207,10 @@ in {
           proxyWebsockets = true;
         };});
 
-        /*"kafka.vivenot.dev" = (SSL // {locations."/" = {
+        "kafka.vivenot.dev" = (SSL // {locations."/" = {
           proxyPass = "http://localhost:14080";
           proxyWebsockets = true;
-          };})*/
+          };})
     };
-  };
+  };*/
 }

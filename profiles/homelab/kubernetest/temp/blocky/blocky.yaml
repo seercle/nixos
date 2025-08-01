@@ -20,14 +20,6 @@ spec:
         ports:
         #- containerPort: 53
         - containerPort: 853
-        env:
-        - name: SIGNUPS_ALLOWED
-          value: "false"
-        - name: ADMIN_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: blocky-secret
-              key: ADMIN_TOKEN
         volumeMounts:
         - name: blocky-data
           mountPath: /data

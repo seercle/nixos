@@ -13,6 +13,7 @@ spec:
       keys:
       - password
       - postgresql
+      #- redis
   valuesContent: |-
     externalURL: "https://harbor.vivenot.dev"
     expose:
@@ -27,6 +28,8 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-prod"
         hosts:
           core: "harbor.vivenot.dev"
+    redis:
+      enabled: true
     persistence:
       persistentVolumeClaim:
         registry:

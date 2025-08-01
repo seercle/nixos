@@ -1,6 +1,6 @@
 certFile: /etc/blocky/cert.pem
 keyFile: /etc/blocky/key.pem
-port:
+ports:
   dns: 53
   tls: 853
 upstream:
@@ -12,7 +12,7 @@ blocking:
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.plus.txt
     adult:
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/nsfw.txt
-  clientGroupBlock:
+  clientGroupsBlock:
     default:
       - ads
     kids:

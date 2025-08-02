@@ -9,9 +9,9 @@ in {
     ../../system/security/ssh
     ../../system/security/wol
     ../../system/security/fail2ban
-    ../../system/security/blocky
-    ../../system/security/minio-backup
     ../../system/security/sops
+    #../../system/security/blocky
+    #../../system/security/minio-backup
 
     ../../system/app/docker
     ../../system/app/pedantix-solver
@@ -19,7 +19,8 @@ in {
     #../../system/app/gitlab
     #../../system/app/kafka
     #../../system/fonts.nix
-    ./kubernetest
+
+    ../../system/kubernetes
   ];
   sops.secrets = {
     WG_PRIVATE_KEY = {};
@@ -28,11 +29,11 @@ in {
       format = "dotenv";
       key = "";
     };
-    MINIO_CONFIG = {
+    /*MINIO_CONFIG = {
       sopsFile = ../../system/security/sops/secrets/minio.json;
       format = "json";
       key = "";
-    };
+    };*/
   };
 
   wireguard = {
@@ -68,6 +69,8 @@ in {
     filePath = "./solver.py";
     logPath = "./job.log";
   };
+  nix-ld.enable = true;
+  /*
   minio-backup = {
     enable = false;
     configFile = secrets.MINIO_CONFIG.path;
@@ -83,24 +86,13 @@ in {
     certFile = "${config.security.acme.certs.${dnsDomain}.directory}/fullchain.pem";
     keyFile = "${config.security.acme.certs.${dnsDomain}.directory}/key.pem";
   };
-  nix-ld.enable = true;
-  /*kafka = {
+  kafka = {
     enable = true;
     publicIp = "vivenot.dev";
     textPort = 9092;
     controllerPort = 9093;
-  };*/
-/*
-  gitlab = {
-    httpPort = 4080;
-    httpsPort = 4443;
-    sshPort = 4022;
-    hostname = "gitlab.vivenot.dev";
-    configPath = "${gitlabPath}/config";
-    logPath = "${gitlabPath}/logs";
-    dataPath = "${gitlabPath}/data";
   };
-*/
+  */
   environment.systemPackages = with pkgs; [
     git
     filebrowser
@@ -120,7 +112,6 @@ in {
     certs.${dnsDomain} = {
       dnsProvider = "cloudflare";
       environmentFile = secrets.CLOUDFLARE_DNS_API_TOKEN.path; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
-      #group = "blocky"; #do this if you don't want to set 'acme' in the groups of the dns
     };
   };
   /*

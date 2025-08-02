@@ -7,10 +7,12 @@ in {
   #];
   imports = [
     #"${pkgs25-05.path}/nixos/modules/services/cluster/k3s/default.nix"
+    ./blocky
+    ./ingress-nginx
     ./longhorn
     ./minio
-    ./ingress-nginx
     ./postgresql
+    ./redis
   ];
   sops.secrets = {
     K3S_TOKEN = {};
@@ -18,11 +20,11 @@ in {
   networking.firewall = {
     allowedTCPPorts = [
       6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
-      # 2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
+      2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
       # 2380 # k3s, etcd peers: required if using a "High Availability Embedded etcd" configuration
     ];
     allowedUDPPorts = [
-      # 8472 # k3s, flannel: required if using multi-node for inter-node networking
+      8472 # k3s, flannel: required if using multi-node for inter-node networking
     ];
   };
   services.k3s = {
@@ -30,10 +32,11 @@ in {
     role = "server";
     tokenFile = secrets.K3S_TOKEN.path;
     extraFlags = toString [
-        "--write-kubeconfig-mode \"0644\""
-        "--disable traefik"
-        "--disable local-storage"
-        "--disable metrics-server"
-      ];
+      "--cluster-init"
+      "--write-kubeconfig-mode \"0644\""
+      "--disable traefik"
+      "--disable local-storage"
+      "--disable metrics-server"
+    ];
   };
 }

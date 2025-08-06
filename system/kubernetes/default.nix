@@ -8,6 +8,7 @@ in {
   imports = [
     #"${pkgs25-05.path}/nixos/modules/services/cluster/k3s/default.nix"
     ./blocky
+    ./fluxcd
     ./ingress-nginx
     ./longhorn
     ./minio
@@ -18,6 +19,9 @@ in {
   sops.secrets = {
     K3S_TOKEN = {};
   };
+  environment.systemPackages = with pkgs; [
+    kubernetes
+  ];
   networking.firewall = {
     allowedTCPPorts = [
       6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
@@ -38,6 +42,7 @@ in {
       "--disable traefik"
       "--disable local-storage"
       "--disable metrics-server"
+      "--disable helm-controller"
     ];
   };
 }

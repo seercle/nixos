@@ -1,6 +1,6 @@
 { config, lib, pkgs, users, ... }:
 let
-  dnsDomain = "dns.vivenot.dev";
+  #dnsDomain = "dns.vivenot.dev";
   secrets = config.sops.secrets;
   #gitlabPath = "/mnt/sdb1/gitlab";
 in {
@@ -24,11 +24,11 @@ in {
   ];
   sops.secrets = {
     WG_PRIVATE_KEY = {};
-    CLOUDFLARE_DNS_API_TOKEN = {
+    /*CLOUDFLARE_DNS_API_TOKEN = {
       sopsFile = ../../system/security/sops/secrets/cloudflare.env;
       format = "dotenv";
       key = "";
-    };
+    };*/
     /*MINIO_CONFIG = {
       sopsFile = ../../system/security/sops/secrets/minio.json;
       format = "json";
@@ -106,14 +106,14 @@ in {
 
   networking.firewall.enable = true; #enable firewall
 
-  security.acme = {
+  /*security.acme = {
     acceptTerms = true;
     defaults.email = "notseercle@gmail.com";
     certs.${dnsDomain} = {
       dnsProvider = "cloudflare";
       environmentFile = secrets.CLOUDFLARE_DNS_API_TOKEN.path; #path to the file with 'CLOUDFLARE_DNS_API_TOKEN=[value]'
     };
-  };
+  };*/
   /*
   services.nginx = {
     enable = true;

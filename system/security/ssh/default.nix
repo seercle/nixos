@@ -15,7 +15,10 @@ in {
         };
     };
     config = lib.mkIf cfg.enable {
-        services.openssh.enable = true;
+        services.openssh = {
+          enable = true;
+          ports = [ cfg.port ];
+        };
         networking.firewall.allowedTCPPorts = [ cfg.port ];
     };
 }

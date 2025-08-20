@@ -5,7 +5,7 @@
   ];
   sops = {
     age.generateKey = true;
-    age.keyFile = "/root/.config/sops/age/keys.txt";
+    age.keyFile = "/root/.config/sops/age/nixos.txt";
     defaultSopsFile = ./secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
   };

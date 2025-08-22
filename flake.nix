@@ -42,7 +42,7 @@
     homeConfigurations = builtins.listToAttrs (builtins.map(user: {
       name = user;
       value = home-manager.lib.homeManagerConfiguration {
-        pkgs = getPkgs nixpkgs-24-11;
+        pkgs = getPkgs nixpkgs;
         modules = [
           ./home.nix
           ./profiles/${profile}/home.nix

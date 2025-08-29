@@ -99,6 +99,7 @@ in {
     tree
   ];
 
+  system.stateVersion = "24.05";
   time.timeZone = "Europe/Paris";
 
   boot.loader.systemd-boot.enable = true;

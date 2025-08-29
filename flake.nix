@@ -33,6 +33,7 @@
     home-manager = home-manager-24-11;
     #sops-nix = sops-nix-24-05;
     allPkgs = {
+      nixpkgs = nixpkgs;
       pkgs24-05 = getPkgs nixpkgs-24-05;
       pkgs24-11 = getPkgs nixpkgs-24-11;
       pkgs25-05 = getPkgs nixpkgs-25-05;

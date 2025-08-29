@@ -1,0 +1,41 @@
+{ config, lib, pkgs, users, ... }:
+let
+in {
+  imports = [
+    ../../system/app/docker
+    ../../system/app/nix-ld
+    ../../system/kubernetes
+  ];
+  docker = {
+   enable = true;
+   usernames = users;
+  };
+  nix-ld.enable = true;
+  environment.systemPackages = with pkgs; [
+    git
+  ];
+
+  system.stateVersion = "25.05";
+  time.timeZone = "Europe/Paris";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "fr_FR.UTF-8";
+    LC_IDENTIFICATION = "fr_FR.UTF-8";
+    LC_MEASUREMENT = "fr_FR.UTF-8";
+    LC_MONETARY = "fr_FR.UTF-8";
+    LC_NAME = "fr_FR.UTF-8";
+    LC_NUMERIC = "fr_FR.UTF-8";
+    LC_PAPER = "fr_FR.UTF-8";
+    LC_TELEPHONE = "fr_FR.UTF-8";
+    LC_TIME = "fr_FR.UTF-8";
+  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  service.xserver.xkb = {
+    layout = "fr";
+    variant = "";
+  };
+  console.keyMap = "fr";
+  networking.firewall.enable = true;
+}

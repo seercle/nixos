@@ -5,6 +5,7 @@ in {
     ../../system/app/docker
     ../../system/app/nix-ld
     #../../system/kubernetes
+    ../../system/app/hyprland
   ];
   docker = {
    enable = true;
@@ -13,6 +14,7 @@ in {
   nix-ld.enable = true;
   environment.systemPackages = with pkgs; [
     git
+    chromium
   ];
 
   system.stateVersion = "25.05";

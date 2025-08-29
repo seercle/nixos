@@ -6,7 +6,7 @@
       withUWSM = true;
       xwayland.enable = true;
     };
-    waybar.enable = true;
+    /*waybar.enable = true;
     hyprlock.enable = true;
     thunar = {
       enable = true;
@@ -17,13 +17,13 @@
   		  thunar-volman
   		  tumbler
       ];
-    };
+      };*/
   };
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
   };
-  environment.systemPackages = with pkgs; [
+  /*environment.systemPackages = with pkgs; [
     wget
     unzip
     gum
@@ -38,23 +38,21 @@
     hyprpicker
     noto-fonts
     noto-fonts-emoji
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-extra
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
     libnotify
     kitty
-    qt5-wayland
-    qt6-wayland
     fastfetch
     eza
-    python-pip
-    python-gobject
-    python-screeninfo
-    tumbler
+    #python-pip
+    #python-gobject
+    #python-screeninfo
+    #tumbler
     brightnessctl
-    nm-connection-editor
-    network-manager-applet
+    #nm-connection-editor
+    networkmanagerapplet
     imagemagick
     jq
     xclip
@@ -69,29 +67,33 @@
     qt6ct
     waybar
     rofi-wayland
-    polkit-gnome
+    #polkit-gnome
+    polkit_gnome
     zsh
     zsh-completions
     fzf
     pavucontrol
     papirus-icon-theme
-    breeze
+    #breeze
+    kdePackages.breeze
     flatpak
-    swaync
+    #swaync
+    swaynotificationcenter
     gvfs
     wlogout
     waypaper
-    grimblast-git
-    bibata-cursor-theme
-    pacseek
-    otf-font-awesome
-    ttf-fira-sans
-    ttf-fira-code
-    ttf-firacode-nerd
-    ttf-dejavu
+    grimblast
+    bibata-cursors
+    #pacseek
+    font-awesome
+    fira-sans
+    fira-code
+    nerd-fonts.fira-code
+    dejavu_fonts
     nwg-dock-hyprland
     power-profiles-daemon
-    python-pywalfox
+    #python-pywalfox
+    pywal
     vlc
   ];
   services = {
@@ -131,5 +133,5 @@
   		Enable = "Source,Sink,Media,Socket";
   		Experimental = true;
     };
-  };
+    };*/
 }

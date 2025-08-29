@@ -7,5 +7,4 @@
     homeMode = "770";
     shell = pkgs.fish;
   };
-  services.greetd.settings.default_session.user = "axel";
 }

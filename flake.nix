@@ -3,24 +3,23 @@
   description = "a general flake";
 
   inputs = {
-    nixpkgs-24-05.url = "github:nixos/nixpkgs?ref=nixos-24.05";
     nixpkgs-24-11.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     nixpkgs-25-05.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager-24-05 = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs-24-05";
-    };
     home-manager-24-11 = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs-24-11";
+    };
+    home-manager-25-05 = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-25-05";
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       #inputs.nixpkgs.follows = "nixpkgs-24-05";
     };
   };
-  outputs = inputs@{self, nixpkgs-24-05,nixpkgs-24-11, nixpkgs-25-05, nixpkgs-unstable, home-manager-24-05,home-manager-24-11, sops-nix, ...}:
+  outputs = inputs@{self, nixpkgs-24-11, nixpkgs-25-05, nixpkgs-unstable, home-manager-24-11, home-manager-25-05, sops-nix, ...}:
 
   let
     getPkgs = some_nixpkgs: some_nixpkgs.legacyPackages.${system};
@@ -34,7 +33,6 @@
     #sops-nix = sops-nix-24-05;
     allPkgs = {
       nixpkgs = nixpkgs;
-      pkgs24-05 = getPkgs nixpkgs-24-05;
       pkgs24-11 = getPkgs nixpkgs-24-11;
       pkgs25-05 = getPkgs nixpkgs-25-05;
       pkgsUnstable = getPkgs nixpkgs-unstable;

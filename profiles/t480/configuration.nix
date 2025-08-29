@@ -4,7 +4,7 @@ in {
   imports = [
     ../../system/app/docker
     ../../system/app/nix-ld
-    ../../system/kubernetes
+    #../../system/kubernetes
   ];
   docker = {
    enable = true;
@@ -32,7 +32,7 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  service.xserver.xkb = {
+  services.xserver.xkb = {
     layout = "fr";
     variant = "";
   };

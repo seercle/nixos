@@ -5,6 +5,7 @@
     ../../../../user/shell/fish
     ../../../../user/shell/aliases
     ../../../../user/shell/starship
+    ../../../../user/app/hyprland
   ];
   programs.thefuck.enable = true;
   git.userName = "seercle";

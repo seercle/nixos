@@ -13,6 +13,7 @@
     cat = "bat";
     s = "sudo";
     k = "kubectl";
+    zed = "zeditor";
   };
   programs.zoxide = {
     enable = true;

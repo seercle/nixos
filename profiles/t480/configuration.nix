@@ -1,90 +1,35 @@
-{ config, lib, pkgs, users, nixpkgs, caelestia-shell, pkgsUnstable, ... }:
+{ config, lib, pkgs, users, nixpkgs, ... }:
 let
 
 in {
   imports = [
     ../../system/app/docker
     ../../system/app/nix-ld
-    #../../system/kubernetes
+    ../../system/security/greetd
+
+    #add enable option to the rest
     ../../system/wm/hyprland
     ../../system/wm/gnome
+    ../../system/app/thunar
+    ../../system/app/pipewire
+    ../../system/hardware/bluetooth
+    ../../system/hardware/graphics
   ];
   docker = {
    enable = true;
    usernames = users;
   };
   nix-ld.enable = true;
-
+  greetd = {
+    enable = true;
+    command = "Hyprland";
+  };
   environment.systemPackages = with pkgs; [
     git
     chromium
-    caelestia-shell.packages.x86_64-linux.with-cli
-    hyprland
-    xdg-desktop-portal-hyprland
-    xdg-desktop-portal-gtk
-    hyprpicker
-    hypridle
-    wl-clipboard
-    cliphist
-    bluez
-    inotify-tools
-    pkgsUnstable.app2unit
-    wireplumber
-    trash-cli
-    foot
-    fish
-    fastfetch
-    starship
-    btop
-    jq
-    socat
-    imagemagick
-    curl
-    adw-gtk3
-    papirus-icon-theme
-    libsForQt5.qt5ct
-    kdePackages.qt6ct
-    nerd-fonts.jetbrains-mono
+    tldr
+    tree
   ];
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
-        user = "axel";
-      };
-    };
-  };
-  programs = {
-    thunar = {
-      enable = true;
-      plugins = with pkgs.xfce; [
-  		  exo
-  		  mousepad
-  		  thunar-archive-plugin
-  		  thunar-volman
-  		  tumbler
-      ];
-    };
-  };
-
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings.General = {
-  		Enable = "Source,Sink,Media,Socket";
-  		Experimental = true;
-    };
-  };
-  services = {
-    pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-        wireplumber.enable = true;
-    };
-  };
 
   system.stateVersion = "25.05";
   time.timeZone = "Europe/Paris";
@@ -112,12 +57,5 @@ in {
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
-  hardware.graphics = {
-    extraPackages = with pkgs; [
-      intel-media-driver
-      libvdpau-va-gl
-      libva
-      libva-utils
-    ];
-  };
+
 }

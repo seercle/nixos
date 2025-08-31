@@ -1,9 +1,8 @@
-{pkgs, caelestia-shell, caelestia-cli, pkgsUnstable, ...}:
+{pkgs, config, lib, pkgsUnstable, caelestia-shell, caelestia-cli, ...}:
 {
   imports = [
     ../../../shell/fish
     ../../../shell/foot
-    ../../../app/btop
   ];
   home.packages = with pkgs; [
     caelestia-shell.packages.${system}.default
@@ -37,6 +36,6 @@
     nerd-fonts.jetbrains-mono
   ];
   home.file = {
-    ".config/hypr".source = ./hypr;
+    ".config/hypr".source = config.lib.file.mkOutOfStoreSymlink /etc/nixos/user/wm/hyprland/caelestia/hypr;
   };
 }

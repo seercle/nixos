@@ -7,9 +7,14 @@
     ../../../../user/shell/foot
     ../../../../user/shell/starship
     ../../../../user/wm/hyprland/caelestia
+    ../../../../user/app/spicetify
+    ../../../../user/app/vesktop
+    ../../../../user/cursor/catppuccin
+    ../../../../user/app/btop
   ];
   home.packages = with pkgs; [
-    zed-editor
+    zed-editor-fhs
+    bitwarden-desktop
   ];
   programs = {
     thefuck.enable = true;

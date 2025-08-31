@@ -29,6 +29,7 @@ in {
     chromium
     tldr
     tree
+    vscode-fhs
   ];
 
   system.stateVersion = "25.05";

@@ -25,8 +25,9 @@
       url = "github:caelestia-dots/cli";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
-  outputs = inputs@{self, nixpkgs-24-11, nixpkgs-25-05, nixpkgs-unstable, home-manager-24-11, home-manager-25-05, sops-nix, caelestia-shell, caelestia-cli, ...}:
+  outputs = inputs@{self, nixpkgs-24-11, nixpkgs-25-05, nixpkgs-unstable, home-manager-24-11, home-manager-25-05, sops-nix, caelestia-shell, caelestia-cli, spicetify-nix, ...}:
 
   let
     getPkgs = some_nixpkgs: some_nixpkgs.legacyPackages.${system};
@@ -52,7 +53,7 @@
           ./profiles/${profile}/users/${user}/home.nix
         ];
         extraSpecialArgs = {
-          inherit user system nixpkgs caelestia-shell caelestia-cli;
+          inherit user system nixpkgs caelestia-shell caelestia-cli spicetify-nix;
         } // allPkgs;
       };
     }) users);

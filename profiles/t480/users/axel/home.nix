@@ -1,4 +1,4 @@
-{ config, pkgs, caelestia-shell, caelestia-cli, system, ... }:
+{ config, pkgs, pkgsUnstable, caelestia-shell, caelestia-cli, system, ... }:
 {
   imports = [
     ../../../../user/app/git
@@ -13,8 +13,9 @@
     ../../../../user/app/btop
   ];
   home.packages = with pkgs; [
-    zed-editor-fhs
+    pkgsUnstable.zed-editor
     bitwarden-desktop
+    thunderbird
   ];
   programs = {
     thefuck.enable = true;

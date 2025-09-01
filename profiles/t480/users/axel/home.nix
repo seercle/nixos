@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, caelestia-shell, caelestia-cli, system, ... }:
+{ config, pkgs, pkgsUnstable, ... }:
 {
   imports = [
     ../../../../user/app/git

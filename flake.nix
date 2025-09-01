@@ -51,6 +51,7 @@
           ./home.nix
           ./profiles/${profile}/home.nix
           ./profiles/${profile}/users/${user}/home.nix
+          caelestia-shell.homeManagerModules.default
         ];
         extraSpecialArgs = {
           inherit user system nixpkgs caelestia-shell caelestia-cli spicetify-nix;

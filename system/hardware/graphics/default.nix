@@ -1,11 +1,15 @@
 {pkgs, ...}:
 {
-  hardware.graphics = {
-    extraPackages = with pkgs; [
-      intel-media-driver
-      libvdpau-va-gl
-      libva
-      libva-utils
-    ];
+  hardware = {
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        libvdpau-va-gl
+        libva
+        libva-utils
+      ];
+    };
+    enableAllFirmware = true;
   };
 }

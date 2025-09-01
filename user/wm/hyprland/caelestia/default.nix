@@ -1,13 +1,10 @@
-{pkgs, config, lib, pkgsUnstable, caelestia-shell, caelestia-cli, ...}:
+{pkgs, config, lib, pkgsUnstable, ...}:
 {
   imports = [
     ../../../shell/fish
     ../../../shell/foot
   ];
   home.packages = with pkgs; [
-    caelestia-shell.packages.${system}.default
-    caelestia-cli.packages.${system}.default
-
     hyprland
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-gtk
@@ -35,6 +32,15 @@
     kdePackages.qt6ct
     nerd-fonts.jetbrains-mono
   ];
+  programs.caelestia = {
+    enable = true;
+    cli.enable = true;
+    settings = {
+      launcher.actionPrefix = "<";
+      paths = {
+      };
+    };
+  };
   home.file = {
     ".config/hypr".source = config.lib.file.mkOutOfStoreSymlink /etc/nixos/user/wm/hyprland/caelestia/hypr;
   };

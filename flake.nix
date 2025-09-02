@@ -21,13 +21,10 @@
       url = "github:caelestia-dots/shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    caelestia-cli = {
-      url = "github:caelestia-dots/cli";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
-  outputs = inputs@{self, nixpkgs-24-11, nixpkgs-25-05, nixpkgs-unstable, home-manager-24-11, home-manager-25-05, sops-nix, caelestia-shell, caelestia-cli, spicetify-nix, ...}:
+  outputs = inputs@{self, nixpkgs-24-11, nixpkgs-25-05, nixpkgs-unstable, spicetify-nix, ...}:
 
   let
     getPkgs = some_nixpkgs: some_nixpkgs.legacyPackages.${system};
@@ -36,7 +33,7 @@
     system = "x86_64-linux";
     users = ["axel"]; #users to select, must be contained in the users directory of the profile directory
     nixpkgs = nixpkgs-25-05;
-    home-manager = home-manager-25-05;
+    home-manager = inputs.home-manager-25-05;
     allPkgs = {
       pkgs24-11 = getPkgs nixpkgs-24-11;
       pkgs25-05 = getPkgs nixpkgs-25-05;
@@ -51,10 +48,10 @@
           ./home.nix
           ./profiles/${profile}/home.nix
           ./profiles/${profile}/users/${user}/home.nix
-          caelestia-shell.homeManagerModules.default
+          inputs.caelestia-shell.homeManagerModules.default
         ];
         extraSpecialArgs = {
-          inherit user system nixpkgs caelestia-shell caelestia-cli spicetify-nix;
+          inherit user system nixpkgs spicetify-nix;
         } // allPkgs;
       };
     }) users);
@@ -63,7 +60,8 @@
       modules = [
         ./configuration.nix
         ./profiles/${profile}/configuration.nix
-        sops-nix.nixosModules.sops
+        inputs.sops-nix.nixosModules.sops
+        inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480s
       ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
       specialArgs = {
         inherit users hostname nixpkgs;

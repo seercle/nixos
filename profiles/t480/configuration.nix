@@ -14,6 +14,7 @@ in {
     ../../system/app/pipewire
     ../../system/hardware/bluetooth
     ../../system/hardware/graphics
+    ../../system/lsp
   ];
   docker = {
    enable = true;

@@ -24,7 +24,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
-  outputs = inputs@{self, nixpkgs-24-11, nixpkgs-25-05, nixpkgs-unstable, spicetify-nix, ...}:
+  outputs = inputs@{self, spicetify-nix, nixos-hardware, ...}:
 
   let
     getPkgs = some_nixpkgs: some_nixpkgs.legacyPackages.${system};
@@ -32,14 +32,25 @@
     hostname = "t480";
     system = "x86_64-linux";
     users = ["axel"]; #users to select, must be contained in the users directory of the profile directory
-    nixpkgs = nixpkgs-25-05;
+    nixpkgs = inputs.nixpkgs-25-05;
     home-manager = inputs.home-manager-25-05;
     allPkgs = {
-      pkgs24-11 = getPkgs nixpkgs-24-11;
-      pkgs25-05 = getPkgs nixpkgs-25-05;
-      pkgsUnstable = getPkgs nixpkgs-unstable;
+      pkgs24-11 = getPkgs inputs.nixpkgs-24-11;
+      pkgs25-05 = getPkgs inputs.nixpkgs-25-05;
+      pkgsUnstable = getPkgs inputs.nixpkgs-unstable;
     };
   in {
+    nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+      system = system;
+      modules = [
+        ./configuration.nix
+        ./profiles/${profile}/configuration.nix
+        inputs.sops-nix.nixosModules.sops
+      ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
+      specialArgs = {
+        inherit users hostname nixpkgs nixos-hardware;
+      } // allPkgs;
+    };
     homeConfigurations = builtins.listToAttrs (builtins.map(user: {
       name = user;
       value = home-manager.lib.homeManagerConfiguration {
@@ -51,21 +62,9 @@
           inputs.caelestia-shell.homeManagerModules.default
         ];
         extraSpecialArgs = {
-          inherit user system nixpkgs spicetify-nix;
+          inherit user nixpkgs spicetify-nix;
         } // allPkgs;
       };
     }) users);
-    nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-      system = system;
-      modules = [
-        ./configuration.nix
-        ./profiles/${profile}/configuration.nix
-        inputs.sops-nix.nixosModules.sops
-        inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480s
-      ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
-      specialArgs = {
-        inherit users hostname nixpkgs;
-      } // allPkgs;
-    };
   };
 }

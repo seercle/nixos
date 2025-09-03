@@ -1,4 +1,4 @@
-{ config, lib, pkgs, users, nixpkgs, ... }:
+{ config, lib, pkgs, users, nixpkgs, nixos-hardware, ... }:
 let
 
 in {
@@ -15,6 +15,8 @@ in {
     ../../system/hardware/bluetooth
     ../../system/hardware/graphics
     ../../system/lsp
+
+    nixos-hardware.nixosModules.lenovo-thinkpad-t480s
   ];
   docker = {
    enable = true;

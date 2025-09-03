@@ -11,6 +11,7 @@
     ../../../../user/app/vesktop
     ../../../../user/cursor/catppuccin
     ../../../../user/app/btop
+    ../../../../user/shell/direnv
   ];
   home.packages = with pkgs; [
     pkgsUnstable.zed-editor

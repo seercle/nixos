@@ -15,11 +15,11 @@ in
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-      set fish_greeting # Disable greeting
-      fish_config theme choose Catppuccin\ Mocha # Select theme
+      set fish_greeting
+      fish_config theme choose Catppuccin\ Mocha
     '';
     plugins = [
-      { name = "grc"; src = pkgs.fishPlugins.grc.src; }      
+      { name = "grc"; src = pkgs.fishPlugins.grc.src; }
       { name = "fzf"; src = pkgs.fishPlugins.fzf-fish.src; }
     ];
   };
@@ -27,4 +27,3 @@ in
   xdg.configFile."fish/themes/Catppuccin Mocha.theme".source = "${catppuccin-fish}/themes/Catppuccin Mocha.theme";
   #xdg.configFile."fish/themes/Catppuccin Frappe.theme".source = "${catppuccin-fish}/themes/Catppuccin Frappe.theme";
 }
-

@@ -13,7 +13,7 @@ in {
     #../../system/security/blocky
     #../../system/security/minio-backup
 
-    ../../system/app/docker
+    ../../system/virtualisation/docker
     ../../system/app/pedantix-solver
     ../../system/app/nix-ld
     #../../system/app/gitlab

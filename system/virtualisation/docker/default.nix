@@ -15,7 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     virtualisation.docker = {
       enable = true;
-      enableOnBoot = true;
+      autoPrune.enable = true;
     };
 
     #add all users to the docker group
@@ -27,6 +27,7 @@ in
     environment.systemPackages = with pkgs; [
       docker
       docker-compose
+      compose2nix
     ];
   };
 }

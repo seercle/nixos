@@ -23,8 +23,9 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    winapps.url = "github:winapps-org/winapps";
   };
-  outputs = inputs@{self, spicetify-nix, nixos-hardware, ...}:
+  outputs = inputs@{self, spicetify-nix, nixos-hardware, winapps, ...}:
 
   let
     getPkgs = some_nixpkgs: some_nixpkgs.legacyPackages.${system};
@@ -48,7 +49,7 @@
         inputs.sops-nix.nixosModules.sops
       ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
       specialArgs = {
-        inherit users hostname nixpkgs nixos-hardware;
+        inherit users hostname system nixpkgs nixos-hardware winapps;
       } // allPkgs;
     };
     homeConfigurations = builtins.listToAttrs (builtins.map(user: {

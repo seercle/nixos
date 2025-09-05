@@ -1,9 +1,10 @@
-{ config, lib, pkgs, users, nixpkgs, nixos-hardware, ... }:
+{ pkgs, users, nixos-hardware, ... }:
 let
 
 in {
   imports = [
-    ../../system/app/docker
+    #../../system/virtualisation/docker
+    #../../system/virtualisation/winapps
     ../../system/app/nix-ld
     ../../system/security/greetd
 
@@ -13,15 +14,13 @@ in {
     ../../system/app/thunar
     ../../system/app/pipewire
     ../../system/hardware/bluetooth
-    ../../system/hardware/graphics
-    ../../system/lsp
 
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
   ];
-  docker = {
-   enable = true;
-   usernames = users;
-  };
+  #docker = {
+  # enable = true;
+  # usernames = users;
+  #};
   nix-ld.enable = true;
   greetd = {
     enable = true;
@@ -58,6 +57,7 @@ in {
   };
   console.keyMap = "fr";
   networking.firewall.enable = true;
+  systemd.services.NetworkManager-wait-online.enable = false;
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };

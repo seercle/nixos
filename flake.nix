@@ -29,10 +29,10 @@
 
   let
     getPkgs = some_nixpkgs: some_nixpkgs.legacyPackages.${system};
-    profile = "t480"; #profile to select, must be contained in the profiles directory
-    hostname = "t480";
+    profile = "homelab"; #profile to select, must be contained in the profiles directory
+    hostname = "homelab";
     system = "x86_64-linux";
-    users = ["axel"]; #users to select, must be contained in the users directory of the profile directory
+    users = ["axel" "william"]; #users to select, must be contained in the users directory of the profile directory
     nixpkgs = inputs.nixpkgs-25-05;
     home-manager = inputs.home-manager-25-05;
     allPkgs = {
@@ -49,7 +49,7 @@
         inputs.sops-nix.nixosModules.sops
       ] ++ builtins.map (username: ./profiles/${profile}/users/${username}/configuration.nix) users;
       specialArgs = {
-        inherit users hostname system nixpkgs nixos-hardware winapps;
+        inherit self nixos-hardware winapps users hostname system nixpkgs;
       } // allPkgs;
     };
     homeConfigurations = builtins.listToAttrs (builtins.map(user: {
@@ -63,7 +63,7 @@
           inputs.caelestia-shell.homeManagerModules.default
         ];
         extraSpecialArgs = {
-          inherit user nixpkgs spicetify-nix;
+          inherit spicetify-nix user nixpkgs;
         } // allPkgs;
       };
     }) users);

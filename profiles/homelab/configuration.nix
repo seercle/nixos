@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, users, ... }:
+{ config, self, pkgs, users, ... }:
 let
   #dnsDomain = "dns.vivenot.dev";
   secrets = config.sops.secrets;
@@ -109,7 +109,7 @@ in {
 
   system.autoUpgrade = {
     enable = true;
-    flake = inputs.self.outPath;
+    flake = self.outPath;
     flags = [
       "-L"
     ];

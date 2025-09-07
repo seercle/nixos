@@ -29,10 +29,10 @@
 
   let
     getPkgs = some_nixpkgs: some_nixpkgs.legacyPackages.${system};
-    profile = "homelab"; #profile to select, must be contained in the profiles directory
-    hostname = "homelab";
+    profile = "t480"; #profile to select, must be contained in the profiles directory
+    hostname = "t480";
     system = "x86_64-linux";
-    users = ["axel" "william"]; #users to select, must be contained in the users directory of the profile directory
+    users = ["axel"]; #users to select, must be contained in the users directory of the profile directory
     nixpkgs = inputs.nixpkgs-25-05;
     home-manager = inputs.home-manager-25-05;
     allPkgs = {

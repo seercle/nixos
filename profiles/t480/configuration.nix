@@ -1,4 +1,4 @@
-{ pkgs, users, nixos-hardware, ... }:
+{ pkgs, nixos-hardware, ... }:
 let
 
 in {
@@ -61,5 +61,9 @@ in {
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
-
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 }

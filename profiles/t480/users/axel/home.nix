@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, ... }:
+{ pkgs, pkgsUnstable, ... }:
 {
   imports = [
     ../../../../user/app/git
@@ -17,6 +17,7 @@
     pkgsUnstable.zed-editor
     bitwarden-desktop
     thunderbird
+    cloc
   ];
   programs = {
     thefuck.enable = true;

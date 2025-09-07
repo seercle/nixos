@@ -1,4 +1,4 @@
-{pkgs, config, lib, pkgsUnstable, ...}:
+{pkgs, config, pkgsUnstable, ...}:
 {
   imports = [
     ../../../shell/fish

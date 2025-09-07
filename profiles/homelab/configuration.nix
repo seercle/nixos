@@ -1,4 +1,4 @@
-{ config, lib, pkgs, users, ... }:
+{ config, inputs, pkgs, users, ... }:
 let
   #dnsDomain = "dns.vivenot.dev";
   secrets = config.sops.secrets;
@@ -107,6 +107,15 @@ in {
 
   networking.firewall.enable = true; #enable firewall
 
+  system.autoUpgrade = {
+    enable = true;
+    flake = inputs.self.outPath;
+    flags = [
+      "-L"
+    ];
+    dates = "02:00";
+    randomizedDelaySec = "45min";
+  };
   /*security.acme = {
     acceptTerms = true;
     defaults.email = "notseercle@gmail.com";

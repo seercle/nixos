@@ -31,13 +31,15 @@
     libsForQt5.qt5ct
     kdePackages.qt6ct
     nerd-fonts.jetbrains-mono
+    networkmanagerapplet
   ];
   programs.caelestia = {
     enable = true;
     cli.enable = true;
     settings = {
       launcher.actionPrefix = "<";
-      paths = {
+      bar.status = {
+        showKbLayout = true;
       };
     };
   };

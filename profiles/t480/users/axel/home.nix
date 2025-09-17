@@ -18,6 +18,7 @@
     bitwarden-desktop
     thunderbird
     cloc
+    firefox
   ];
   programs = {
     thefuck.enable = true;

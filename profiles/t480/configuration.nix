@@ -32,7 +32,6 @@ in {
     tldr
     tree
     vscode-fhs
-    nix-index
   ];
 
   system.stateVersion = "25.05";

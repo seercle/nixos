@@ -24,6 +24,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     winapps.url = "github:winapps-org/winapps";
+    nix-index-database.url = "github:nix-community/nix-index-database";
   };
   outputs = inputs@{self, spicetify-nix, nixos-hardware, winapps, ...}:
 
@@ -61,6 +62,7 @@
           ./profiles/${profile}/home.nix
           ./profiles/${profile}/users/${user}/home.nix
           inputs.caelestia-shell.homeManagerModules.default
+          inputs.nix-index-database.homeModules.nix-index
         ];
         extraSpecialArgs = {
           inherit spicetify-nix user nixpkgs;

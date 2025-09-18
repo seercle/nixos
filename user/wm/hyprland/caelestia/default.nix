@@ -32,14 +32,23 @@
     kdePackages.qt6ct
     nerd-fonts.jetbrains-mono
     networkmanagerapplet
+    pavucontrol
+    mpv
   ];
   programs.caelestia = {
     enable = true;
     cli.enable = true;
     settings = {
       launcher.actionPrefix = "<";
-      bar.status = {
-        showKbLayout = true;
+      bar = {
+        /*workspaces = {
+          occupiedLabel = " ";
+          activeLabel = " ";
+          };*/
+        status = {
+          showAudio = true;
+          showKbLayout = true;
+        };
       };
     };
   };

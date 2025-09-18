@@ -22,12 +22,7 @@
   ];
   programs = {
     thefuck.enable = true;
-    /*zed-editor = {
-      enable = true;
-      package = pkgs.zed-editor;
-      };*/
   };
   git.userName = "seercle";
   git.userEmail = "notseercle@gmail.com";
-
 }

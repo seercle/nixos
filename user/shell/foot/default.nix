@@ -1,16 +1,17 @@
-{...}: {
+{...}:
+{
   programs.foot = {
     enable = true;
     settings = {
         main = {
-            shell="fish";
-            title="foot";
-            font="JetBrains Mono Nerd Font:size=12";
-            letter-spacing=0;
-            dpi-aware="no";
-            pad="25x25";
-            bold-text-in-bright="no";
-            gamma-correct-blending="no";
+          shell="fish";
+          title="foot";
+          font="JetBrains Mono Nerd Font:size=12";
+          letter-spacing=0;
+          dpi-aware="no";
+          pad="25x25";
+          bold-text-in-bright="no";
+          gamma-correct-blending="no";
         };
         scrollback.lines=10000;
 

@@ -34,6 +34,7 @@
     networkmanagerapplet
     pavucontrol
     mpv
+    gpu-screen-recorder
   ];
   programs.caelestia = {
     enable = true;
@@ -41,14 +42,43 @@
     settings = {
       launcher.actionPrefix = "<";
       bar = {
-        /*workspaces = {
-          occupiedLabel = " ";
-          activeLabel = " ";
-          };*/
+        workspaces = {
+          shown = 8;
+        };
         status = {
           showAudio = true;
           showKbLayout = true;
         };
+        entries = [
+          {
+            id = "logo";
+            enabled = true;
+          }
+          {
+            id = "workspaces";
+            enabled = true;
+          }
+          {
+            id = "spacer";
+            enabled = true;
+          }
+          {
+            id = "tray";
+            enabled = true;
+          }
+          {
+            id = "clock";
+            enabled = true;
+          }
+          {
+            id = "statusIcons";
+            enabled = true;
+          }
+          {
+            id = "power";
+            enabled = true;
+          }
+        ];
       };
     };
   };

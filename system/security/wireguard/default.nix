@@ -2,12 +2,9 @@
 let
     service = "wireguard";
     cfg = config.${service};
-in 
+in
 {
   options.${service} = with lib; {
-    enable = mkEnableOption {
-      description = "Enable WireGuard VPN server";
-    };
     port = mkOption {
       type = types.int;
     };
@@ -35,7 +32,7 @@ in
   };
 
 
-  config = lib.mkIf cfg.enable {
+  config = {
     networking.nat.enable = true;
     networking.firewall.allowedUDPPorts = [cfg.port];
     networking.nat.externalInterface = cfg.externalInterface;

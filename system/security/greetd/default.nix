@@ -5,20 +5,17 @@ let
 in
 {
   options.${service} = with lib; {
-    enable = mkEnableOption {
-        description = "Enable ${service}";
-    };
     command = mkOption {
       type = types.str;
       description = "Command to execute";
     };
   };
-  config = lib.mkIf cfg.enable {
+  config = {
     services.greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${cfg.command}";
           user = "greeter";
         };
       };

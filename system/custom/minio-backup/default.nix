@@ -4,9 +4,6 @@ let
     cfg = config.${service};
 in {
   options.${service} = with lib; {
-    enable = mkEnableOption {
-        description = "Enable ${service} for backing up files to MinIO";
-    };
     configFile = mkOption {
       type = types.str;
       description = "Path to the file containing the MinIO configuration";
@@ -34,7 +31,7 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
     systemd.timers.${service} = {
       wantedBy = [ "timers.target" ];
       timerConfig = {

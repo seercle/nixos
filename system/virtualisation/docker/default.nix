@@ -5,20 +5,16 @@ let
 in
 {
   options.${service} = with lib; {
-    enable = mkEnableOption {
-      description = "Enable Docker service";
-    };
     usernames = mkOption {
       type = types.listOf types.str;
     };
   };
-  config = lib.mkIf cfg.enable {
+  config = {
     virtualisation.docker = {
       enable = true;
       autoPrune.enable = true;
     };
 
-    #add all users to the docker group
     users.users = builtins.listToAttrs(builtins.map(username: {
       name = username;
       value = {extraGroups = ["docker"];};

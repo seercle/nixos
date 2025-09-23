@@ -3,29 +3,23 @@ let
 
 in {
   imports = [
-    #../../system/virtualisation/docker
-    #../../system/virtualisation/winapps
-    ../../system/app/nix-ld
     ../../system/security/greetd
-
-    #add enable option to the rest
     ../../system/wm/hyprland
     ../../system/wm/gnome
     ../../system/app/thunar
     ../../system/app/pipewire
-    ../../system/hardware/bluetooth
-
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
   ];
-  #docker = {
-  # enable = true;
-  # usernames = users;
-  #};
-  nix-ld.enable = true;
-  greetd = {
-    enable = true;
-    command = "Hyprland";
+  greetd.command = "Hyprland";
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
   };
+  programs = {
+    nix-ld.enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     git
     chromium
@@ -60,10 +54,5 @@ in {
   systemd.services.NetworkManager-wait-online.enable = false;
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  };
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
   };
 }

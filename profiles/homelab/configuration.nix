@@ -57,10 +57,7 @@ in {
    enable = true;
    usernames = users;
   };
-  wol = {
-    enable = true;
-    interface = "enp4s0";
-  };
+  networking.interfaces."enp4s0".wakeOnLan.enable = true;
   fail2ban.enable = true;
   pedantix-solver = {
     enable = true;

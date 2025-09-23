@@ -5,9 +5,6 @@ let
 in
   {
     options.${service} = with lib; {
-      enable = mkEnableOption {
-        description = "Enable ${service}";
-      };
       certFile = mkOption {
         type = types.str;
         description = "Path to the certificate file for Blocky.";
@@ -17,7 +14,7 @@ in
         description = "Path to the key file for Blocky.";
       };
     };
-  config = lib.mkIf cfg.enable {
+  config = {
     networking.firewall.allowedTCPPorts = [53 853];
     networking.firewall.allowedUDPPorts = [53];
     users.users.blocky = {

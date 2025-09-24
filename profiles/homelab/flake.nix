@@ -1,6 +1,6 @@
 
 {
-  description = "t480 flake";
+  description = "homelab flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";

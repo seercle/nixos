@@ -1,8 +1,5 @@
-{ config, lib, pkgs, hostname, nixpkgs, ... }:
+{ pkgs, hostname, ... }:
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.hostName = hostname;
   networking.networkmanager.enable = true;

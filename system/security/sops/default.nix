@@ -1,12 +1,22 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
+let
+  service = "_sops";
+  cfg = config.${service};
+in
 {
-  environment.systemPackages = with pkgs; [
-    sops
-  ];
-  sops = {
-    age.generateKey = true;
-    age.keyFile = "/root/.config/sops/age/nixos.txt";
-    defaultSopsFile = ./secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
+  options.${service} = with lib; {
+    keyFile = mkOption {
+      type = types.str;
+    };
+  };
+  config = {
+    environment.systemPackages = with pkgs; [
+      sops
+    ];
+    sops = {
+      age.keyFile = cfg.keyFile;
+      defaultSopsFile = ./secrets.yaml;
+      defaultSopsFormat = "yaml";
+    };
   };
 }

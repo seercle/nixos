@@ -11,7 +11,7 @@ in {
       description = "Port for SSH connections.";
     };
   };
-  config = lib.mkIf cfg.enable {
+  config = {
     services.openssh = {
       enable = true;
       ports = [ cfg.port ];

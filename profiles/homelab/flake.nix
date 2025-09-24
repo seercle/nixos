@@ -16,6 +16,8 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixpkgs-25_05.url = "github:nixos/nixpkgs/nixos-25.05";
   };
   outputs = inputs@{self, nixpkgs, home-manager, ...}:
 
@@ -24,6 +26,9 @@
     hostname = "homelab";
     system = "x86_64-linux";
     users = ["axel" "william"];
+    pkgs = {
+      pkgs25_05 = inputs.nixpkgs-25_05.legacyPackages.${system};
+    };
   in {
     nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
       system = system;
@@ -35,7 +40,7 @@
       ] ++ builtins.map (username: ./users/${username}/configuration.nix) users;
       specialArgs = {
         inherit self users hostname system nixpkgs;
-      };
+      } // pkgs;
     };
     homeConfigurations = builtins.listToAttrs (builtins.map(user: {
       name = user;

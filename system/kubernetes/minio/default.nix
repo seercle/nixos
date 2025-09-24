@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-    environment.systemPackages = with pkgs; [
-        minio-client
-    ];
+  environment.systemPackages = with pkgs; [
+    minio-client
+  ];
 }

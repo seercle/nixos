@@ -1,6 +1,6 @@
 {pkgs, ... }:
 {
-    environment.systemPackages = with pkgs; [
-        fluxcd
-    ];
+  environment.systemPackages = with pkgs; [
+    fluxcd
+  ];
 }

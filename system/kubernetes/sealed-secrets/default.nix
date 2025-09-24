@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-    environment.systemPackages = with pkgs; [
-        kubeseal
-    ];
+  environment.systemPackages = with pkgs; [
+    kubeseal
+  ];
 }

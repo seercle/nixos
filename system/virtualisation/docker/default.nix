@@ -5,7 +5,7 @@ let
 in
 {
   options.${service} = with lib; {
-    usernames = mkOption {
+    users = mkOption {
       type = types.listOf types.str;
     };
   };
@@ -18,7 +18,7 @@ in
     users.users = builtins.listToAttrs(builtins.map(username: {
       name = username;
       value = {extraGroups = ["docker"];};
-    }) cfg.usernames);
+    }) cfg.users);
 
     environment.systemPackages = with pkgs; [
       docker

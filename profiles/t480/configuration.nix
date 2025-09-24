@@ -4,6 +4,7 @@ let
 in {
   imports = [
     ../../system/security/greetd
+    ../../system/security/sops
     ../../system/wm/hyprland
     ../../system/wm/gnome
     ../../system/app/thunar
@@ -11,6 +12,7 @@ in {
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
   ];
   greetd.command = "Hyprland";
+  _sops.keyFile = "/home/axel/.config/sops/age/keys.txt";
   nix.gc = {
     automatic = true;
     dates = "weekly";

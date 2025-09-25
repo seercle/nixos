@@ -11,22 +11,21 @@ in {
     ../../system/virtualisation/docker
     ../../system/custom/pedantix-solver
   ];
-  _sops.keyFile = /root/.config/sops/age/keys.txt;
+  _sops.keyFile = "/root/.config/sops/age/nixos.txt";
   sops.secrets = {
     WG_PRIVATE_KEY = {
-      sopsFile = ./secrets/sops.txt;
+      sopsFile = ./secrets/sops.yaml;
       format = "yaml";
       key = "WG_PRIVATE_KEY";
     };
     K3S_TOKEN = {
-      sopsFile = ./secrets/sops.txt;
+      sopsFile = ./secrets/sops.yaml;
       format = "yaml";
       key = "K3S_TOKEN";
     };
   };
 
   wireguard = {
-    enable = true;
     port = 51820;
     externalInterface = "enp4s0";
     privateKeyFile = secrets.WG_PRIVATE_KEY.path;

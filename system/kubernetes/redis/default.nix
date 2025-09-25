@@ -1,6 +1,6 @@
-{pkgs25-05, ...}:
+{pkgs25_05, ...}:
 {
-  environment.systemPackages = with pkgs25-05; [
+  environment.systemPackages = with pkgs25_05; [
     redis
   ];
 }

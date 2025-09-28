@@ -7,6 +7,7 @@ in {
     ../../system/security/sops
     ../../system/wm/hyprland
     ../../system/wm/gnome
+    ../../system/app/localsend
     ../../system/app/thunar
     ../../system/app/pipewire
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s

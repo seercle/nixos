@@ -16,7 +16,7 @@ in {
     WG_PRIVATE_KEY = {
       sopsFile = ./secrets/sops.yaml;
       format = "yaml";
-      key = "WG_PRIVATE_KEY";
+      key = "WIREGUARD_PRIVATE_KEY";
     };
     K3S_TOKEN = {
       sopsFile = ./secrets/sops.yaml;

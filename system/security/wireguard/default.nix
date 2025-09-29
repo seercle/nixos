@@ -28,6 +28,7 @@ in
           };
           endpoint = mkOption {
             type = types.nullOr types.str;
+            default = null;
           };
         };
       });
@@ -48,7 +49,7 @@ in
         listenPort =  cfg.port;
         privateKeyFile = cfg.privateKeyFile;
         peers = cfg.peers;
-        dynamicEndpointRefreshSeconds = 60;
+        #dynamicEndpointRefreshSeconds = 60;
       };
     };
     environment.systemPackages = [ pkgs.wireguard-tools ];

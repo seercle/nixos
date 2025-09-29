@@ -29,10 +29,10 @@ in {
     port = 51820;
     externalInterface = "enp4s0";
     privateKeyFile = secrets.WG_PRIVATE_KEY.path;
-    ips = ["10.0.0.1/24"];
+    ips = ["10.0.0.1/32"];
     peers = [
       {
-        publicKey = "xQaF3IfJQvmHEzytEVAG2xBSdn56NsqRXt2eIUGYJRY=";
+        publicKey = "uh+Vruyi8N+ZoZ8tP2QXMJNotKBe3s2pMB7DsFhfbXw=";
         allowedIPs = ["10.0.0.2/32"];
       }
     ];

@@ -1,10 +1,11 @@
-{ pkgs, nixos-hardware, ... }:
+{ pkgs, config, nixos-hardware, ... }:
 let
-
+  secrets = config.sops.secrets;
 in {
   imports = [
     ../../system/security/greetd
     ../../system/security/sops
+    ../../system/security/wireguard
     ../../system/wm/hyprland
     ../../system/wm/gnome
     ../../system/app/localsend
@@ -14,6 +15,25 @@ in {
   ];
   greetd.command = "Hyprland";
   _sops.keyFile = "/home/axel/.config/sops/age/keys.txt";
+  sops.secrets = {
+    WG_PRIVATE_KEY = {
+      sopsFile = ./secrets/sops.yaml;
+      format = "yaml";
+      key = "WIREGUARD.PRIVATE_KEY";
+    };
+  };
+  wireguard = {
+    port = 51820;
+    externalInterface = "wlp61s0";
+    privateKeyFile = secrets.WG_PRIVATE_KEY.path;
+    ips = ["10.0.0.2/32"];
+    peers = [
+      {
+        publicKey = "fS7oBpMhjao5KZFjlSZe42Fbet5aIWJRLzZPocaXjRQ=";
+        allowedIPs = ["10.0.0.1/32"];
+      }
+    ];
+  };
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -53,7 +73,11 @@ in {
     variant = "";
   };
   console.keyMap = "fr";
-  networking.firewall.enable = true;
+  networking.firewall = {
+    enable = true;
+    #allowedTCPPorts = [ 65535 ];
+    #allowedUDPPorts = [ 65535 ];
+  };
   systemd.services.NetworkManager-wait-online.enable = false;
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };

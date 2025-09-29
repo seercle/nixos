@@ -19,7 +19,7 @@ in {
     WG_PRIVATE_KEY = {
       sopsFile = ./secrets/sops.yaml;
       format = "yaml";
-      key = "WIREGUARD.PRIVATE_KEY";
+      key = "WIREGUARD_PRIVATE_KEY";
     };
   };
   wireguard = {
@@ -31,6 +31,7 @@ in {
       {
         publicKey = "fS7oBpMhjao5KZFjlSZe42Fbet5aIWJRLzZPocaXjRQ=";
         allowedIPs = ["10.0.0.1/32"];
+        endpoint = "seercle.com:51820";
       }
     ];
   };

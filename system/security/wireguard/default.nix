@@ -26,6 +26,9 @@ in
           allowedIPs = mkOption {
             type = types.listOf types.str;
           };
+          endpoint = mkOption {
+            type = types.nullOr types.str;
+          };
         };
       });
     };
@@ -33,18 +36,21 @@ in
 
 
   config = {
-    networking.nat.enable = true;
-    networking.firewall.allowedUDPPorts = [cfg.port];
-    networking.nat.externalInterface = cfg.externalInterface;
-    networking.nat.internalInterfaces = [ "wg0" ];
-    environment.systemPackages = [ pkgs.wireguard-tools ];
-    networking.wireguard.interfaces = {
-      wg0 = {
+    networking = {
+      firewall.allowedUDPPorts = [cfg.port];
+      nat = {
+        enable = true;
+        externalInterface = cfg.externalInterface;
+        internalInterfaces = [ "wg0" ];
+      };
+      wireguard.interfaces."wg0" = {
         ips = cfg.ips;
         listenPort =  cfg.port;
         privateKeyFile = cfg.privateKeyFile;
         peers = cfg.peers;
+        dynamicEndpointRefreshSeconds = 60;
       };
     };
+    environment.systemPackages = [ pkgs.wireguard-tools ];
   };
 }

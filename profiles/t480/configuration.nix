@@ -1,4 +1,4 @@
-{ pkgs, config, lib, nixos-hardware, ... }:
+{ pkgs, config, nixos-hardware, ... }:
 let
   secrets = config.sops.secrets;
 in {
@@ -8,7 +8,6 @@ in {
     ../../system/security/wireguard
     ../../system/wm/hyprland
     ../../system/wm/gnome
-    ../../system/app/localsend
     ../../system/app/thunar
     ../../system/app/pipewire
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
@@ -42,6 +41,7 @@ in {
   };
   programs = {
     nix-ld.enable = true;
+    localsend.enable = true;
   };
 
   environment.systemPackages = with pkgs; [

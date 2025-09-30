@@ -16,20 +16,20 @@
         scrollback.lines=10000;
 
         cursor = {
-        style="beam";
-        beam-thickness=1.5;
+          style="beam";
+          beam-thickness=1.5;
         };
         colors.alpha = 0.78;
 
         key-bindings = {
-        scrollback-up-page="Page_Up";
-        scrollback-down-page="Page_Down";
-        search-start="Control+Shift+f";
+          scrollback-up-page="Page_Up";
+          scrollback-down-page="Page_Down";
+          search-start="Control+Shift+f";
         };
         search-bindings = {
-        cancel="Escape";
-        find-prev="Shift+F3";
-        find-next="F3 Control+G";
+          cancel="Escape";
+          find-prev="Shift+F3";
+          find-next="F3 Control+G";
         };
     };
   };

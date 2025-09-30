@@ -1,4 +1,4 @@
-{ pkgs, config, nixos-hardware, ... }:
+{ pkgs, config, lib, nixos-hardware, ... }:
 let
   secrets = config.sops.secrets;
 in {

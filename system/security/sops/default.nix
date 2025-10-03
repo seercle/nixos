@@ -1,9 +1,12 @@
-{ pkgs, lib, config, ... }:
-let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   service = "_sops";
   cfg = config.${service};
-in
-{
+in {
   options.${service} = with lib; {
     keyFile = mkOption {
       type = types.str;

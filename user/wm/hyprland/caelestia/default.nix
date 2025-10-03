@@ -1,5 +1,9 @@
-{pkgs, config, pkgsUnstable, ...}:
 {
+  pkgs,
+  config,
+  pkgsUnstable,
+  ...
+}: {
   imports = [
     ../../../shell/fish
     ../../../shell/foot
@@ -34,7 +38,6 @@
     networkmanagerapplet
     pavucontrol
     mpv
-    gpu-screen-recorder
   ];
   programs.caelestia = {
     enable = true;

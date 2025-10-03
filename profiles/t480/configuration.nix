@@ -1,5 +1,10 @@
-{ pkgs, config, nixos-hardware, ... }:
-let
+{
+  pkgs,
+  config,
+  users,
+  nixos-hardware,
+  ...
+}: let
   secrets = config.sops.secrets;
 in {
   imports = [
@@ -9,7 +14,10 @@ in {
     ../../system/wm/hyprland
     ../../system/wm/gnome
     ../../system/app/thunar
+    ../../system/virtualisation/podman
+    #../../system/virtualisation/docker
     ../../system/app/pipewire
+    ../../system/app/gpu-screen-recorder
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
   ];
   greetd.command = "Hyprland";
@@ -19,6 +27,14 @@ in {
       sopsFile = ./secrets/sops.yaml;
       format = "yaml";
       key = "WIREGUARD_PRIVATE_KEY";
+    };
+    TP_VPN_CONFIG = {
+      sopsFile = ./secrets/tp_sops.ovpn;
+      format = "binary";
+    };
+    TP_VPN_USERPASS = {
+      sopsFile = ./secrets/tp_userpass.ovpn;
+      format = "binary";
     };
   };
   wireguard = {
@@ -34,10 +50,24 @@ in {
       }
     ];
   };
+  docker.users = users;
+  #podman.users = users;
+
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 30d";
+  };
+  services = {
+    openvpn.servers = {
+      tpVPN = {
+        config = ''
+          config ${secrets.TP_VPN_CONFIG.path}
+          auth-user-pass  ${secrets.TP_VPN_USERPASS.path}
+        '';
+        autoStart = false;
+      };
+    };
   };
   programs = {
     nix-ld.enable = true;
@@ -74,13 +104,21 @@ in {
     variant = "";
   };
   console.keyMap = "fr";
-  networking.firewall = {
-    enable = true;
-    #allowedTCPPorts = [ 65535 ];
-    #allowedUDPPorts = [ 65535 ];
+  networking = {
+    firewall = {
+      enable = true;
+      #allowedTCPPorts = [ 65535 ];
+      #allowedUDPPorts = [ 65535 ];
+    };
+    networkmanager = {
+      enable = true;
+      plugins = with pkgs; [
+        networkmanager-openvpn
+      ];
+    };
   };
   systemd.services.NetworkManager-wait-online.enable = false;
   nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+    vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
   };
 }

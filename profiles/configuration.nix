@@ -1,8 +1,10 @@
-{ pkgs, hostname, ... }:
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  pkgs,
+  hostname,
+  ...
+}: {
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   networking.hostName = hostname;
-  networking.networkmanager.enable = true;
   environment.systemPackages = with pkgs; [
     home-manager
   ];

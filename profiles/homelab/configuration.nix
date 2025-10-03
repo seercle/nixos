@@ -1,5 +1,10 @@
-{ config, self, pkgs, users, ... }:
-let
+{
+  config,
+  self,
+  pkgs,
+  users,
+  ...
+}: let
   secrets = config.sops.secrets;
 in {
   imports = [
@@ -62,6 +67,7 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.firewall.enable = true;
+  networking.networkmanager.enable = true;
   system.autoUpgrade = {
     enable = true;
     flake = self.outPath;

@@ -73,8 +73,7 @@ $azure\
 $crystal\
 $custom\
 $status\
-$os\
-$battery"""
+$os"""
 
 [fill]
 symbol = ' '

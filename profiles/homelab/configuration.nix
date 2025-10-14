@@ -89,6 +89,11 @@ in {
       "--disable local-storage"
       "--disable metrics-server"
       "--disable helm-controller"
+      "--flannel-ipv6-masq"
+      "--cluster-cidr=fd00:70:80::/104"
+      "--service-cidr=fd00:70:80:99::/112"
+      "--kube-controller-manager-arg=\"--node-cidr-mask-size-ipv6=120\""
+      "--node-ip=2a02:8428:ea60:c001:9d89:cb1e:edb6:c978"
     ];
   };
 }

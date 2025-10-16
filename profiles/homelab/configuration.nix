@@ -32,7 +32,7 @@ in {
 
   wireguard = {
     port = 51820;
-    externalInterface = "enp4s0";
+    externalInterface = "enp3s0";
     privateKeyFile = secrets.WG_PRIVATE_KEY.path;
     ips = ["10.0.0.1/32"];
     peers = [
@@ -44,10 +44,12 @@ in {
   };
   ssh.port = 22;
   docker.users = users;
-  networking.interfaces."enp4s0".wakeOnLan.enable = true;
+
+  networking.interfaces."enp3s0".wakeOnLan.enable = true;
   programs = {
     nix-ld.enable = true;
   };
+
   pedantix-solver = {
     enable = true;
     path = "/home/axel/ssd/pedantix-solver";
@@ -68,6 +70,7 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   networking.firewall.enable = true;
   networking.networkmanager.enable = true;
+
   system.autoUpgrade = {
     enable = true;
     flake = self.outPath;
@@ -76,6 +79,11 @@ in {
     ];
     dates = "02:00";
     randomizedDelaySec = "45min";
+  };
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
   };
 
   services.k3s = {

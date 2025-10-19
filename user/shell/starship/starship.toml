@@ -9,8 +9,6 @@ right_format = """
 $singularity\
 $kubernetes\
 $directory\
-$username\
-$hostname\
 $vcsh\
 $fossil_branch\
 $git_branch\
@@ -74,7 +72,10 @@ $azure\
 $crystal\
 $custom\
 $status\
-$os"""
+$os\
+$username\
+$hostname\
+"""
 
 [fill]
 symbol = ' '
@@ -109,15 +110,15 @@ read_only = " 󰌾"
 #repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) [△](bold bright-blue)'
 
 [username]
-style_user = "bright-yellow bold italic"
-style_root = "purple bold italic"
+style_user = "yellow bold"
+style_root = "purple bold"
 format = " [$user]($style)"
 disabled = false
 show_always = false
 
 [hostname]
 ssh_only = true
-style = "bold italic bright-blue"
+style = "bold blue"
 format = '@[$hostname]($style)'
 
 [cmd_duration]

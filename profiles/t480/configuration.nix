@@ -14,8 +14,8 @@ in {
     ../../system/wm/hyprland
     ../../system/wm/gnome
     ../../system/app/thunar
-    ../../system/virtualisation/podman
-    #../../system/virtualisation/docker
+    #../../system/virtualisation/podman
+    ../../system/virtualisation/docker
     ../../system/app/pipewire
     ../../system/app/gpu-screen-recorder
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
@@ -46,7 +46,7 @@ in {
       {
         publicKey = "fS7oBpMhjao5KZFjlSZe42Fbet5aIWJRLzZPocaXjRQ=";
         allowedIPs = ["10.0.0.1/32"];
-        endpoint = "seercle.com:51820";
+        endpoint = "homelab.seercle.com:51820";
       }
     ];
   };
@@ -80,6 +80,10 @@ in {
     tldr
     tree
     vscode-fhs
+    unzip
+    gparted
+    hyprpolkitagent
+    baobab
   ];
 
   system.stateVersion = "25.05";
@@ -117,6 +121,7 @@ in {
       ];
     };
   };
+  security.polkit.enable = true;
   systemd.services.NetworkManager-wait-online.enable = false;
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};

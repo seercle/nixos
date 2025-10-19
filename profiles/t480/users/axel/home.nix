@@ -17,6 +17,10 @@
     thunderbird
     cloc
     firefox
+    dig
+    toybox
+    redis
+    postgresql
   ];
   programs = {
     thefuck.enable = true;

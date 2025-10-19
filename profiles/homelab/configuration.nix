@@ -42,7 +42,7 @@ in {
       }
     ];
   };
-  ssh.port = 22;
+  ssh.port = 44;
   docker.users = users;
 
   networking.interfaces."enp3s0".wakeOnLan.enable = true;

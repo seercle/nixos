@@ -17,6 +17,8 @@
       # HTTP
       80
       443
+      # Git
+      22
     ];
     allowedUDPPorts = [
       # Kubernetes

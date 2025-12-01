@@ -75,10 +75,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    git
     chromium
-    tldr
-    tree
     vscode-fhs
     unzip
     gparted
@@ -111,8 +108,16 @@ in {
   networking = {
     firewall = {
       enable = true;
-      #allowedTCPPorts = [ 65535 ];
-      #allowedUDPPorts = [ 65535 ];
+      # Open ports for some application that might require to open a TCP port
+      # Do not use them for something permanent
+      allowedTCPPortRanges = [{
+        from = 10100;
+        to = 10110;
+      }];
+      allowedUDPPortRanges = [{
+        from = 10100;
+        to = 10110;
+      }];
     };
     networkmanager = {
       enable = true;

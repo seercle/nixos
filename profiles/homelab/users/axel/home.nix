@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   imports = [
     ../../../../user/shell/fish
     ../../../../user/shell/aliases
@@ -14,11 +13,8 @@
     };
   };
   home.packages = with pkgs; [
-    tldr
     bun
     nodejs_22
-    tree
-    wget
     openssl
     nix-prefetch-git
     tmux

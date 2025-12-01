@@ -44,4 +44,11 @@
     PrivateMounts = "yes";
     BindPaths = "/run/current-system/sw/bin:/bin";
   };
+ 
+  # Jellyfin
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watches" = "524288";
+    "fs.inotify.max_user_instances" = "8192";
+  };
+    
 }

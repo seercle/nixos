@@ -62,6 +62,7 @@ in {
     git
     filebrowser
     tree
+    kubernetes-helm
   ];
 
   system.stateVersion = "24.05";

@@ -59,9 +59,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    git
     filebrowser
-    tree
     kubernetes-helm
   ];
 

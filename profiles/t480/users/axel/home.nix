@@ -1,5 +1,8 @@
-{ pkgs, pkgsUnstable, ... }:
 {
+  pkgs,
+  pkgsUnstable,
+  ...
+}: {
   imports = [
     ../../../../user/shell/fish
     ../../../../user/shell/aliases
@@ -17,10 +20,9 @@
     thunderbird
     cloc
     firefox
-    dig
-    toybox
     redis
     postgresql
+    tmux
   ];
   programs = {
     thefuck.enable = true;

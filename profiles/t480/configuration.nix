@@ -59,6 +59,7 @@ in {
     options = "--delete-older-than 30d";
   };
   services = {
+    blueman.enable = true;
     openvpn.servers = {
       tpVPN = {
         config = ''
@@ -70,7 +71,7 @@ in {
     };
   };
   programs = {
-    nix-ld.enable = true;
+    dconf.enable = true;
     localsend.enable = true;
   };
 
@@ -110,14 +111,18 @@ in {
       enable = true;
       # Open ports for some application that might require to open a TCP port
       # Do not use them for something permanent
-      allowedTCPPortRanges = [{
-        from = 10100;
-        to = 10110;
-      }];
-      allowedUDPPortRanges = [{
-        from = 10100;
-        to = 10110;
-      }];
+      allowedTCPPortRanges = [
+        {
+          from = 10100;
+          to = 10110;
+        }
+      ];
+      allowedUDPPortRanges = [
+        {
+          from = 10100;
+          to = 10110;
+        }
+      ];
     };
     networkmanager = {
       enable = true;

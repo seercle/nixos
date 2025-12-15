@@ -5,9 +5,11 @@
     ../../../../user/shell/starship
   ];
   programs = {
-    thefuck.enable = true;
-    git = {
+    tmux = {
       enable = true;
+      shell = "${pkgs.fish}/bin/fish";
+    };
+    git = {
       userName = "seercle";
       userEmail = "notseercle@gmail.com";
     };
@@ -21,8 +23,4 @@
     python313
     minio-client
   ];
-  programs.tmux = {
-    enable = true;
-    shell = "${pkgs.fish}/bin/fish";
-  };
 }

@@ -46,9 +46,6 @@ in {
   docker.users = users;
 
   networking.interfaces."enp3s0".wakeOnLan.enable = true;
-  programs = {
-    nix-ld.enable = true;
-  };
 
   pedantix-solver = {
     enable = true;

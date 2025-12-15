@@ -1,7 +1,12 @@
-{ user,...}:
-{
-  programs.home-manager.enable = true;
-  home.username = user;
-  home.homeDirectory = /home/${user};
+{user, ...}: {
+  programs = {
+    home-manager.enable = true;
+    thefuck.enable = true;
+    git.enable = true;
+  };
+  home = {
+    username = user;
+    homeDirectory = /home/${user};
+  };
   nixpkgs.config.allowUnfree = true;
 }

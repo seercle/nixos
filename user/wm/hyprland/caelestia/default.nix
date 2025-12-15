@@ -17,6 +17,7 @@
     wl-clipboard
     cliphist
     bluez
+    blueman
     inotify-tools
     pkgsUnstable.app2unit
     wireplumber

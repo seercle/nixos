@@ -25,10 +25,12 @@
     tmux
   ];
   programs = {
-    thefuck.enable = true;
     vesktop.enable = true;
-    git = {
+    tmux = {
       enable = true;
+      shell = "${pkgs.fish}/bin/fish";
+    };
+    git = {
       userName = "seercle";
       userEmail = "notseercle@gmail.com";
     };

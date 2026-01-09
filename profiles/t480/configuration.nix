@@ -12,7 +12,7 @@ in {
     ../../system/security/sops
     ../../system/security/wireguard
     ../../system/wm/hyprland
-    ../../system/wm/gnome
+    #../../system/wm/gnome
     ../../system/app/thunar
     #../../system/virtualisation/podman
     ../../system/virtualisation/docker
@@ -58,7 +58,10 @@ in {
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
   services = {
+    upower.enable = true;
     blueman.enable = true;
     openvpn.servers = {
       tpVPN = {
@@ -68,6 +71,10 @@ in {
         '';
         autoStart = false;
       };
+    };
+    mullvad-vpn = {
+      enable = true;
+      package = pkgs.mullvad-vpn;
     };
   };
   programs = {
@@ -82,6 +89,7 @@ in {
     gparted
     hyprpolkitagent
     baobab
+    libreoffice
   ];
 
   system.stateVersion = "25.05";

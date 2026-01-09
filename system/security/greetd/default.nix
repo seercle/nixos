@@ -1,9 +1,12 @@
-{ pkgs, config, lib, ... }:
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   service = "greetd";
   cfg = config.${service};
-in
-{
+in {
   options.${service} = with lib; {
     command = mkOption {
       type = types.str;
@@ -15,7 +18,7 @@ in
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${cfg.command}";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${cfg.command}";
           user = "greeter";
         };
       };

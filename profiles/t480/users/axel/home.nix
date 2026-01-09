@@ -30,9 +30,9 @@
       enable = true;
       shell = "${pkgs.fish}/bin/fish";
     };
-    git = {
-      userName = "seercle";
-      userEmail = "notseercle@gmail.com";
+    git.settings.user = {
+      name = "seercle";
+      email = "notseercle@gmail.com";
     };
   };
 }

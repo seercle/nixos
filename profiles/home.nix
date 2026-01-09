@@ -1,7 +1,7 @@
 {user, ...}: {
   programs = {
     home-manager.enable = true;
-    thefuck.enable = true;
+    pay-respects.enable = true;
     git.enable = true;
   };
   home = {

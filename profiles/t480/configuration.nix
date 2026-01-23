@@ -12,7 +12,6 @@ in {
     ../../system/security/sops
     ../../system/security/wireguard
     ../../system/wm/hyprland
-    #../../system/wm/gnome
     ../../system/app/thunar
     #../../system/virtualisation/podman
     ../../system/virtualisation/docker
@@ -20,6 +19,14 @@ in {
     ../../system/app/gpu-screen-recorder
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
   ];
+
+  users.users.axel = {
+    isNormalUser = true;
+    extraGroups = ["networkmanager" "wheel"];
+    homeMode = "770";
+    shell = pkgs.fish;
+  };
+
   greetd.command = "Hyprland";
   _sops.keyFile = "/home/axel/.config/sops/age/keys.txt";
   sops.secrets = {
@@ -77,18 +84,12 @@ in {
       package = pkgs.mullvad-vpn;
     };
   };
+
   programs = {
     dconf.enable = true;
     localsend.enable = true;
+    fish.enable = true;
   };
-
-  environment.systemPackages = with pkgs; [
-    chromium
-    vscode-fhs
-    unzip
-    gparted
-    libreoffice
-  ];
 
   system.stateVersion = "25.05";
   time.timeZone = "Europe/Paris";

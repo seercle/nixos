@@ -1,4 +1,3 @@
-
 {
   description = "t480 flake";
 
@@ -32,9 +31,15 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
-  outputs = inputs@{self, nixpkgs, home-manager, spicetify-nix, nixos-hardware, winapps, ...}:
-
-  let
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    spicetify-nix,
+    nixos-hardware,
+    winapps,
+    ...
+  }: let
     pkgs = {
       pkgsUnstable = inputs.nixpkgs-unstable.legacyPackages.${system};
     };
@@ -50,26 +55,30 @@
         ./configuration.nix
         ../configuration.nix
         inputs.sops-nix.nixosModules.sops
-      ] ++ builtins.map (username: ./users/${username}/configuration.nix) users;
-      specialArgs = {
-        inherit self nixos-hardware winapps users hostname system nixpkgs;
-      } // pkgs;
+      ];
+      specialArgs =
+        {
+          inherit self nixos-hardware winapps users hostname system nixpkgs;
+        }
+        // pkgs;
     };
-    homeConfigurations = builtins.listToAttrs (builtins.map(user: {
-      name = user;
-      value = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
-        modules = [
-          ../home.nix
-          ./home.nix
-          ./users/${user}/home.nix
-          inputs.caelestia-shell.homeManagerModules.default
-          inputs.nix-index-database.homeModules.nix-index
-        ];
-        extraSpecialArgs = {
-          inherit profile spicetify-nix user nixpkgs;
-        } // pkgs;
-      };
-    }) users);
+    homeConfigurations = builtins.listToAttrs (builtins.map (user: {
+        name = user;
+        value = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          modules = [
+            ../home.nix
+            ./home.nix
+            inputs.caelestia-shell.homeManagerModules.default
+            inputs.nix-index-database.homeModules.nix-index
+          ];
+          extraSpecialArgs =
+            {
+              inherit profile spicetify-nix user nixpkgs;
+            }
+            // pkgs;
+        };
+      })
+      users);
   };
 }

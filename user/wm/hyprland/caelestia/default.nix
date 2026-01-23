@@ -19,7 +19,7 @@
     bluez
     blueman
     inotify-tools
-    pkgsUnstable.app2unit
+    app2unit
     wireplumber
     trash-cli
     foot
@@ -38,7 +38,6 @@
     nerd-fonts.jetbrains-mono
     networkmanagerapplet
     pavucontrol
-    mpv
   ];
   programs.caelestia = {
     enable = true;

@@ -87,8 +87,6 @@ in {
     vscode-fhs
     unzip
     gparted
-    hyprpolkitagent
-    baobab
     libreoffice
   ];
 

@@ -23,6 +23,12 @@
     redis
     postgresql
     tmux
+    mpv
+    file-roller
+    image-roll
+    eog
+    hyprpolkitagent
+    baobab
   ];
   programs = {
     vesktop.enable = true;

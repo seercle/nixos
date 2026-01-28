@@ -4,39 +4,14 @@
   pkgsUnstable,
   ...
 }: {
-  imports = [
-    ../../../shell/fish
-    ../../../shell/foot
-  ];
+  #imports = [
+  #  ../shell/foot
+  #];
   home.packages = with pkgs; [
-    hyprland
-    xdg-desktop-portal-hyprland
-    xdg-desktop-portal-gtk
-    hyprpicker
-    hypridle
-    wl-clipboard
-    cliphist
-    bluez
-    blueman
-    inotify-tools
+    networkmanagerapplet
     app2unit
-    wireplumber
-    trash-cli
-    foot
-    fish
-    fastfetch
-    starship
-    btop
-    jq
-    socat
-    imagemagick
-    curl
     adw-gtk3
     papirus-icon-theme
-    libsForQt5.qt5ct
-    kdePackages.qt6ct
-    nerd-fonts.jetbrains-mono
-    networkmanagerapplet
     pavucontrol
   ];
   programs.caelestia = {
@@ -86,6 +61,6 @@
     };
   };
   home.file = {
-    ".config/hypr".source = config.lib.file.mkOutOfStoreSymlink /etc/nixos/user/wm/hyprland/caelestia/hypr;
+    ".config/hypr".source = config.lib.file.mkOutOfStoreSymlink /etc/nixos/user/caelestia/hypr;
   };
 }

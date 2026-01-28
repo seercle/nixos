@@ -10,7 +10,7 @@
     ../../user/shell/starship
     ../../user/shell/direnv
     ../../user/cursor/catppuccin
-    ../../user/wm/hyprland/caelestia
+    ../../user/caelestia
     ../../user/app/spicetify
     ../../user/app/btop
   ];
